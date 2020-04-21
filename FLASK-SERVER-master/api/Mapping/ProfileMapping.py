@@ -150,12 +150,12 @@ def edit_profile():
 @add_profile_photo_blueprint.route("/add/photo/", methods=['POST'], strict_slashes=False)  # user nick search
 def add_photo_profile():
     try:
-        Profile = ServiceProfile()
+        profile = ServiceProfile()
         res = request.get_json()
         id_nick = res['id_nick']
         privated = res['privated']
         description = res['description']
-        return dumps({"name_photo": Profile.add_photo(id_nick, privated, description)})
+        return dumps({"name_photo": profile.add_photo(id_nick, privated, description)})
 
     except Exception as e:
 
@@ -192,7 +192,7 @@ def delete_photo_profile():
         return {"status": True}
 
     except Exception as e:
-        print('upload_photo_profile', e)
+        print('delete_photo_profile', e)
 
         return {"status": False}
 

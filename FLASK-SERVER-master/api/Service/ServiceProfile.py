@@ -13,28 +13,30 @@ class ServiceProfile:
     @staticmethod
     def add_photo(id_user, privated, description) -> bool:
         try:
-            Photo(user=id_user, description=description, privated=privated).save()
+            Photo(user=id_user, description=description, privated=privated, createdAt=datetime.now()).save()
+
             return True
+
         except Exception as e:
             print('ServiceProfile.add_photo', e)
 
             return False
 
     @staticmethod
-    def del_photo(id_photo):
+    def del_photo(id_photo) -> bool:
         try:
 
-            User.objects(id=ObjectId(id_photo)).update_one(
-                set__photo=None,
-            )
+            Photo.objects(id=ObjectId(id_photo)).delete()
+
             return True
+
         except Exception as e:
             print('ServiceProfile.del_photo', e)
 
             return False
 
     @staticmethod
-    def set_avatar_photo(id_user, id_photo):
+    def set_avatar_photo(id_user, id_photo) -> bool:
         try:
 
             User.objects(id=ObjectId(id_user)).update_one(

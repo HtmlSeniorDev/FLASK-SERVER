@@ -1,9 +1,10 @@
-from mongoengine import Document
+from mongoengine import Document, ReferenceField, CASCADE
 from mongoengine import StringField
+from .UserModel import User
 
 
 class PushNotification(Document):
-    user = StringField()
+    user = ReferenceField(User, reverse_delete_rule=CASCADE)
     token = StringField()
     meta = {'collection': 'PushNotification'}
 
