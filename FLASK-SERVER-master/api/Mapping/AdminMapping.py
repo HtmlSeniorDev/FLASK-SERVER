@@ -21,60 +21,7 @@ add_gift_admin_blueprint = Blueprint('add_gift_admin_blueprint', __name__)
 upload_gift_admin_blueprint = Blueprint('upload_gift_admin_blueprint', __name__)
 update_gift_admin_blueprint = Blueprint('update_gift_admin_blueprint', __name__)
 delete_gift_admin_blueprint = Blueprint('delete_gift_admin_blueprint', __name__)
-found_user_banned_blueprint = Blueprint('found_user_banned_blueprint', __name__)
 
-useri = []
-
-@found_user_banned_blueprint.route("/banned/user", methods=['GET'])  # users in room
-def found_user_banned():
-
-    online_users = mongo.db.dBBannedUser
-    user_room = dumps(online_users.find().limit(50).sort('_id', -1), sort_keys=False, indent=4,
-                      ensure_ascii=False, separators=(',', ': '))
-    count1 = 0
-    global us
-    for us in json.loads(user_room):
-        count1 += 1
-        us = us['userId']
-        useri.append(us)
-    global v
-    global user
-    arr = []
-    user = {'data': []}
-    count = 0
-    for _ in range(count1):
-        count += 1
-        v = loads(user_room)
-        b = v[count - 1]
-        g = (b['userId'])
-        admin = (b['bannerId'])
-        id_document = (b['_id'])
-        online_users = mongo.db.users
-        nick = (online_users.find_one({'_id': ObjectId(str(g))}))
-        online_users1 = mongo.db.users
-        nick1 = (online_users1.find_one({'_id': ObjectId(str(admin))}))
-        rus1 = (nick1['nic'])
-        rus = (nick['nic'])
-        color = int(nick['color'])
-
-        if rus == None:
-            pass
-            print('users empty')
-        else:
-            lists_users = (
-                {'user': rus + '', 'color': color , 'user_id': g + '', 'admin': rus1 + '',
-                 "id_document": str(id_document), "id_banner": str(admin)})
-            arr.append(lists_users)
-    url_by_dict = {i['user']: i for i in arr}
-    new_items = list(url_by_dict.values())
-    counts = 0
-    for i in new_items[::-1]:
-        counts += 1
-        user['data'].append(i)
-
-    complete = dumps((user), sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
-
-    return complete
 
 @Unban_Actions_blueprint.route("/Unban/User", methods=['POST'], strict_slashes=False)  # user search objectid
 def unban_user():
@@ -89,7 +36,7 @@ def unban_user():
     return jsonify({"Accept": result})
 
 
-@AdminList_blueprint.route("/get/users/type/<types>", methods=['GET'])  # user nick search
+@AdminList_blueprint.route("/get/users/type/<types>", methods=['GET'])
 def get_admin_list(types):
     try:
         api_admin_list = ServiceAdmin()
@@ -98,7 +45,7 @@ def get_admin_list(types):
         return str(e)
 
 
-@moderator_list_blueprint.route("/get/users/type/<types>", methods=['GET'])  # users in room
+@moderator_list_blueprint.route("/get/users/type/<types>", methods=['GET'])
 def found_list_moderators(types):
     try:
         api_admin_list = ServiceAdmin()
@@ -110,7 +57,7 @@ def found_list_moderators(types):
         return str(e)
 
 
-@invisible_list_blueprint.route("/get/users/type/<types>", methods=['GET'])  # users in room
+@invisible_list_blueprint.route("/get/users/type/<types>", methods=['GET'])
 def found_list_invisible(types):
     try:
         api_admin_list = ServiceAdmin()
@@ -125,16 +72,12 @@ def found_list_invisible(types):
 @invisible_list_blueprint.route("/add/invisible", methods=['POST'], strict_slashes=False)  # users in room
 def add_invisible():
     try:
-
         api_admin_list = ServiceAdmin()
         res = request.get_json()
         id_user = str(res['id_user'])
         id_admin = str(res['id_admin'])
-
         return jsonify({'status': api_admin_list.add_invisible(id_user, id_admin)})
-
     except Exception as e:
-
         return str(e)
 
 
@@ -147,11 +90,8 @@ def add_avatar_admin():
         name = res['name']
         price = res['price']
         return dumps({"name_avatar": Avatar.add_avatar(price, creator, name)})
-
     except Exception as e:
-
         print('AdminMapping_add_avatar_admin', e)
-
         return {"name_avatar": False}
 
 

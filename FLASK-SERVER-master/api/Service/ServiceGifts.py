@@ -9,19 +9,24 @@ from ..Objects.Server_id import SERVER_ID, SERVER_ADDRESS, TYPE_ADMIN
 from bson.objectid import ObjectId
 from ..Model.DataModel.ListGiftsModel import ListGiftsModel
 
+
+# todo дописать без оповещений в лс
 class ServiceGifts:
     Gifts = GiftsDao()
     User = UsersDao()
-    Msg = ServiceMessages()
     Gift_url = SERVER_ADDRESS + '/attachments/gifts-'
     Text_Sending = "Пользователь отправил вам подарок,он будет виден у вас в профиле!"
 
     def get_gifts_list_service(self):
         try:
 
-            return list(map(lambda gift: ListGiftsModel(gift['_id']['$oid'],
-                                                            self.Gift_url + gift['_id'][
-                                                                '$oid'], int(gift['price']), gift['name'],gift['description']),
+            return list(map(lambda gift: ListGiftsModel(
+                gift['_id']['$oid'],
+                self.Gift_url + gift['_id']['$oid'],
+                int(gift['price']),
+                gift['name'],
+                gift['description']
+            ),
                             json.loads(dumps(self.Gifts.get_gifts_list()))))
         except Exception as e:
             print(e)
@@ -58,8 +63,6 @@ class ServiceGifts:
                 }
 
                 dumps(self.Gifts.insert_gift(object_user_gifts))
-                self.Msg.create_rooms(SERVER_ID, str(user_id),
-                                      self.Text_Sending)
                 dumps(self.User.change_information_user(from_id, object_change))
 
                 return True
@@ -116,7 +119,7 @@ class ServiceGifts:
                     "createdAt": createdAt[0],  # объект времени 0
                     "name": str(name),
                     "price": int(gift_price) * 100,
-                    "description":str(description)
+                    "description": str(description)
 
                 }
 
