@@ -1,5 +1,5 @@
 from flask import Flask
-from SERVER_CONFIG import MONGO_ADDRESS, MONGO_PORT
+from SERVER_CONFIG import MONGO_ADDRESS, MONGO_PORT, MONGO_USER, MONGO_PASS
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from mongoengine import connect, disconnect
@@ -13,6 +13,8 @@ def create_app():
     app.config["MONGO_URI"] = "mongodb://" + MONGO_ADDRESS + ":" + str(MONGO_PORT) + "/chat"
     app.config['SECRET_KEY'] = 'secret!'
     app.config["MONGODB_DB"] = 'chat'
+    app.config['MONGO_USERNAME'] = MONGO_USER
+    app.config['MONGO_PASSWORD'] = MONGO_PASS
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["MONGODB_SETTINGS"] = {"DB": "chat"}
 
@@ -27,7 +29,9 @@ def create_app():
     connect(
         'chat',
         host="mongodb://" + MONGO_ADDRESS + ":" + str(MONGO_PORT) + "/chat",
-        port=27017
+        port=27017,
+        username=MONGO_USER,
+        password=MONGO_PASS,
     )
 
     return app
