@@ -2,8 +2,8 @@ from api.Repository.UsersDao import UsersDao
 from api.Repository.PhotosDao import PhotosDao
 from datetime import datetime
 from bson.objectid import ObjectId
-from ..Model.DbModel.Photo import Photo
-from ..Model.DbModel.UserModel import User
+from ..Models.DbModel.Photo import Photo
+from ..Models.DbModel.UserModel import User
 
 
 class ServiceProfile:

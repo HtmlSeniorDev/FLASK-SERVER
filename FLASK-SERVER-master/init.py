@@ -10,12 +10,12 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 def create_app():
-    app.config["MONGO_URI"] = "mongodb://" + MONGO_ADDRESS + ":" + str(MONGO_PORT) + "/chat"
+    app.config["MONGO_URI"] = "mongodb://" + MONGO_USER + ':' + MONGO_PASS + '@' + MONGO_ADDRESS + ":" + str(
+        MONGO_PORT) + "/chat"
     app.config['SECRET_KEY'] = 'secret!'
     app.config["MONGODB_DB"] = 'chat'
-    app.config['MONGO_USERNAME'] = MONGO_USER
-    app.config['MONGO_PASSWORD'] = MONGO_PASS
     app.config['CORS_HEADERS'] = 'Content-Type'
+    app.config['MONGO_AUTH_SOURCE'] = 'admin'
     app.config["MONGODB_SETTINGS"] = {"DB": "chat"}
 
     from db import mongo, mongoEngine

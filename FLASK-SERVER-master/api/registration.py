@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from datetime import datetime
-from .Model.DbModel.UserModel import User
+from .Models.DbModel.UserModel import User
 
 registration_blueprint = Blueprint('registration_blueprint', __name__, )
 

@@ -5,28 +5,34 @@ from datetime import timedelta
 from api.Repository.GiftsDao import GiftsDao
 from api.Repository.UsersDao import UsersDao
 from .ServiceMessages import ServiceMessages
+from ..Models.DbModel.GiftModel import Gift
 from ..Objects.Server_id import SERVER_ID, SERVER_ADDRESS, TYPE_ADMIN
 from bson.objectid import ObjectId
-from ..Model.DataModel.ListGiftsModel import ListGiftsModel
+from ..Models.DataModel.ListGiftsModel import ListGiftsModel
+from .ServiceValidation import ServiceValidation
+
 
 class ServiceGifts:
     Gifts = GiftsDao()
     User = UsersDao()
+    Validator = ServiceValidation()
     Msg = ServiceMessages()
-    Gift_url = SERVER_ADDRESS + '/attachments/gifts-'
+    Gift_url = SERVER_ADDRESS + '/attachments/gift/'
     Text_Sending = "Пользователь отправил вам подарок,он будет виден у вас в профиле!"
 
     def get_gifts_list_service(self):
         try:
 
             return list(map(lambda gift: ListGiftsModel(gift['_id']['$oid'],
-                                                            self.Gift_url + gift['_id'][
-                                                                '$oid'], int(gift['price']), gift['name'],gift['description']),
+                                                        self.Gift_url + gift['_id']['$oid']
+                                                        , int(gift['price']), gift['name'],
+                                                        gift['description']),
                             json.loads(dumps(self.Gifts.get_gifts_list()))))
         except Exception as e:
             print(e)
             pass
 
+    # todo исправить
     def send_gifts(self, gift_price, user_id, gift_id, from_id):
         try:
 
@@ -68,78 +74,50 @@ class ServiceGifts:
             print(e)
             pass
 
-    def add_gift(self, gift_price, creator, name, description):
+    def add_gift(self, gift_price, creator, name, description, photo):
         try:
-
-            response_user = dumps(self.User.get_information_user(creator))
-            serialize_user = json.loads(response_user)
-            type_user = int(serialize_user['type'])
-            if type_user != TYPE_ADMIN:
+            validation = self.Validator.checked_admin(creator)
+            if not validation:
                 return False
             else:
-
-                createdAt = datetime.now(),
-
-                object_change = {
-
-                    "creator": str(creator),
-                    "createdAt": createdAt[0],  # объект времени 0
-                    "name": str(name),
-                    "description": str(description),
-                    "price": int(gift_price) * 100
-
-                }
-
-                return self.Gifts.insert_gift_admin(object_change)
-
+                time = datetime.now()
+                avatar = Gift(
+                    creator=creator,
+                    price=int(gift_price) * 100,
+                    createdAt=time,
+                    description=description,
+                    name=name)
+                avatar.photo.put(photo, content_type='image/png', filename="gift_" + str(time))
+                avatar.save()
+                return True
         except Exception as e:
-            print('ServiceGifts_add_gif', e)
+            print('ServiceGift_add_gift', e)
             pass
 
     def update_gift(self, gift_price, name, creator, gift_id, description):
         try:
-
-            response_user = dumps(self.User.get_information_user(creator))
-            serialize_user = json.loads(response_user)
-            type_user = int(serialize_user['type'])
-            if type_user != TYPE_ADMIN:
+            validation = self.Validator.checked_admin(creator)
+            if not validation:
                 return False
             else:
-
-                createdAt = datetime.now(),
-
-                search_kwargs = {"_id": ObjectId(gift_id)}
-
-                object_change = {
-
-                    "creator": str(creator),
-                    "createdAt": createdAt[0],  # объект времени 0
-                    "name": str(name),
-                    "price": int(gift_price) * 100,
-                    "description":str(description)
-
-                }
-
-                return self.Gifts.update_gift_admin(search_kwargs, object_change)
-
+                Gift.objects(id=ObjectId(gift_id)).update_one(
+                    set__creator=creator,
+                    set__description=description,
+                    set__price=int(gift_price) * 100,
+                    set__createdAt=datetime.now(),
+                    set__name=name
+                )
         except Exception as e:
-            print('ServiceAvatar_update_avatar', e)
+            print('ServiceGift_update_gift', e)
             pass
 
-    def delete_gift(self, creator, avatar_id):
+    def delete_gift(self, creator, gift_id):
         try:
-
-            response_user = dumps(self.User.get_information_user(creator))
-            serialize_user = json.loads(response_user)
-            type_user = int(serialize_user['type'])
-            if type_user != TYPE_ADMIN:
+            validation = self.Validator.checked_admin(creator)
+            if not validation:
                 return False
             else:
-
-                search_kwargs = {"_id": ObjectId(str(avatar_id))}
-                self.Gifts.delete_users_gifts_permanent({'gift': avatar_id})
-                return self.Gifts.delete_gift_admin(search_kwargs)
-
+                return Gift.objects(id=ObjectId(gift_id)).delete()
         except Exception as e:
-            print('ServiceAvatar_delete_avatar', e)
+            print('ServiceGift_delete_gift', e)
             pass

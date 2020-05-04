@@ -19,13 +19,13 @@ from api.Mapping.ZagsMapping import Zags_Request_Decline_blueprint, Zags_Request
 
 from api.Mapping.PersonalRoomsMapping import find_personalrooms_blueprint
 
-from api.Mapping.AttachmentsMapping import uploads_blueprint, get_attachments_blueprint
+from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint,uploads_attachments_blueprint
 
 from api.Mapping.PortalMapping import WeddingList_blueprint, Run_line_blueprint
 
 from api.Mapping.AdminMapping import AdminList_blueprint, moderator_list_blueprint, found_user_banned_blueprint, \
     invisible_list_blueprint, \
-    Unban_Actions_blueprint, add_avatar_admin_blueprint, upload_avatar_admin_blueprint, update_avatar_admin_blueprint, \
+    Unban_Actions_blueprint, add_avatar_admin_blueprint, update_avatar_admin_blueprint, \
     delete_avatar_admin_blueprint, add_gift_admin_blueprint, upload_gift_admin_blueprint, update_gift_admin_blueprint, \
     delete_gift_admin_blueprint
 
@@ -54,7 +54,6 @@ app.register_blueprint(upload_gift_admin_blueprint)
 app.register_blueprint(update_avatar_admin_blueprint)
 app.register_blueprint(delete_avatar_admin_blueprint)
 app.register_blueprint(add_avatar_admin_blueprint)
-app.register_blueprint(upload_avatar_admin_blueprint)
 app.register_blueprint(delete_photo_to_profile_blueprint)
 app.register_blueprint(set_avatar_photo_to_profile_blueprint)
 app.register_blueprint(upload_photo_to_profile_blueprint)
@@ -87,10 +86,10 @@ app.register_blueprint(last_room_blueprint)
 app.register_blueprint(found_user_banned_blueprint)
 app.register_blueprint(registration_blueprint)
 app.register_blueprint(autharization_blueprint)
-app.register_blueprint(get_attachments_blueprint)
+app.register_blueprint(get_attachments_gift_blueprint)
 app.register_blueprint(delete_gifts_blueprint)
 app.register_blueprint(profile_blueprint)
-app.register_blueprint(uploads_blueprint)
+app.register_blueprint(get_attachments_avatar_blueprint)
 app.register_blueprint(find_personalrooms_blueprint)
 app.register_blueprint(gifts_blueprint)
 app.register_blueprint(users_room_blueprint)

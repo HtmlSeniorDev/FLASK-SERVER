@@ -34,7 +34,8 @@ def buy_avatar():
 def get_gifts():
     try:
         api_gifts_list = ServiceGifts()
-        return api_gifts_list.get_gifts_list_service()
+        return jsonify([e.serialize() for e in api_gifts_list.get_gifts_list_service()])
+
     except Exception as e:
 
         return str(e)

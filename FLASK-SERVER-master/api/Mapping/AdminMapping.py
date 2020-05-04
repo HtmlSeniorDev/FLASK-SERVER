@@ -3,6 +3,8 @@ from db import mongo
 from bson.json_util import dumps, loads
 from bson.objectid import ObjectId
 from flask import Blueprint, request, jsonify
+from datetime import datetime
+from ..Models.DbModel.AvatarModel import Avatar
 from ..Service.ServiceColor import ServiceColor
 from ..Service.ServiceAdmin import ServiceAdmin
 from ..Service.ServiceUnban import ServiceUnban
@@ -25,9 +27,9 @@ found_user_banned_blueprint = Blueprint('found_user_banned_blueprint', __name__)
 
 useri = []
 
+
 @found_user_banned_blueprint.route("/banned/user", methods=['GET'])  # users in room
 def found_user_banned():
-
     online_users = mongo.db.dBBannedUser
     user_room = dumps(online_users.find().limit(50).sort('_id', -1), sort_keys=False, indent=4,
                       ensure_ascii=False, separators=(',', ': '))
@@ -62,7 +64,7 @@ def found_user_banned():
             print('users empty')
         else:
             lists_users = (
-                {'user': rus + '', 'color': color , 'user_id': g + '', 'admin': rus1 + '',
+                {'user': rus + '', 'color': color, 'user_id': g + '', 'admin': rus1 + '',
                  "id_document": str(id_document), "id_banner": str(admin)})
             arr.append(lists_users)
     url_by_dict = {i['user']: i for i in arr}
@@ -75,6 +77,7 @@ def found_user_banned():
     complete = dumps((user), sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
 
     return complete
+
 
 @Unban_Actions_blueprint.route("/Unban/User", methods=['POST'], strict_slashes=False)  # user search objectid
 def unban_user():
@@ -142,32 +145,15 @@ def add_invisible():
 def add_avatar_admin():
     try:
         Avatar = ServiceAvatar()
-        res = request.get_json()
-        creator = res['creator']
-        name = res['name']
-        price = res['price']
-        return dumps({"name_avatar": Avatar.add_avatar(price, creator, name)})
+        creator = request.form.get('creator')
+        name = request.form.get('name')
+        price = request.form.get('price')
+        photo = request.files['photo']
+        return dumps({"status": Avatar.add_avatar(price, creator, name, photo)})
 
     except Exception as e:
 
         print('AdminMapping_add_avatar_admin', e)
-
-        return {"name_avatar": False}
-
-
-@upload_avatar_admin_blueprint.route("/upload/avatar/admin", methods=['POST'])  # user nick search
-def upload_avatar_admin():
-    try:
-        mongo.save_file("avatars-" + request.files['photo'].filename, request.files["photo"], metadata={
-            "_contentType": "image/png",
-            "_class": "com.mongodb.BasicDBObject"
-        }, content_type='')
-
-        return {"status": True}
-
-    except Exception as e:
-
-        print('AdminMapping_upload_avatar_admin', e)
 
         return {"status": False}
 
@@ -209,35 +195,17 @@ def delete_avatar_admin():
 def add_gift_admin():
     try:
         Gift = ServiceGifts()
-        res = request.get_json()
-        creator = res['creator']
-        name = res['name']
-        price = res['price']
-        description = res['description']
-        return dumps({"name_gifts": Gift.add_gift(price, creator, name, description)})
-
+        creator = request.form.get('creator')
+        name = request.form.get('name')
+        price = request.form.get('price')
+        description = request.form.get('description')
+        photo = request.files['photo']
+        return dumps({"status": Gift.add_gift(price, creator, name, description, photo)})
     except Exception as e:
 
         print('AdminMapping_add_avatar_admin', e)
 
         return {"name_avatar": False}
-
-
-@upload_gift_admin_blueprint.route("/upload/gift/admin", methods=['POST'])  # user nick search
-def upload_gift_admin():
-    try:
-        mongo.save_file("gifts-" + request.files['photo'].filename, request.files["photo"], metadata={
-            "_contentType": "image/png",
-            "_class": "com.mongodb.BasicDBObject"
-        }, content_type='')
-
-        return {"status": True}
-
-    except Exception as e:
-
-        print('AdminMapping_upload_gift_admin', e)
-
-        return {"status": False}
 
 
 @update_gift_admin_blueprint.route("/update/gift/admin", methods=['POST'])  # user nick search

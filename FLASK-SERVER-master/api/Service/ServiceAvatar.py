@@ -7,9 +7,9 @@ from bson.objectid import ObjectId
 
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
-from ..Model.DataModel.ListAvatarsModel import ListAvatarsModel
-from ..Model.DbModel.AvatarModel import Avatar
-from ..Model.DbModel.UserModel import User
+from ..Models.DataModel.ListAvatarsModel import ListAvatarsModel
+from ..Models.DbModel.AvatarModel import Avatar
+from ..Models.DbModel.UserModel import User
 from ..Objects.Server_id import SERVER_ADDRESS
 from ..Service.ServiceValidation import ServiceValidation
 
@@ -18,16 +18,18 @@ class ServiceAvatar:
     Avatar = AvatarDao()
     User = UsersDao()
     Validator = ServiceValidation()
-    avatar_url = SERVER_ADDRESS + "/attachments/avatars-"
+    avatar_url = SERVER_ADDRESS + "/attachments/avatar/"
 
     def combine_avatar_list(self):
         try:
-            return list(map(lambda avatar: ListAvatarsModel(avatar['_id']['$oid'],
-                                                            self.avatar_url + avatar['_id'][
-                                                                '$oid'], int(avatar['price']), avatar['name']),
-                            json.loads(dumps(self.Avatar.get_avatar_list()))))
+            return list(map(lambda avatar: ListAvatarsModel(
+             avatar['_id']['$oid'],
+             self.avatar_url + avatar['_id']['$oid'],
+             int(avatar['price']),
+             avatar['name']),
+             json.loads(dumps(self.Avatar.get_avatar_list()))))
         except Exception as e:
-            print(e)
+            print('combine_avatar_list', e)
             pass
 
     def buy_avatars(self, avatar_price, user_id, avatar_id):
@@ -50,17 +52,20 @@ class ServiceAvatar:
             print('ServiceAvatar_buy_avatar', e)
             pass
 
-    def add_avatar(self, avatar_price, creator, name):
+    def add_avatar(self, avatar_price, creator, name, photo):
         try:
             validation = self.Validator.checked_admin(creator)
             if not validation:
                 return False
             else:
-                Avatar(
+                time = datetime.now()
+                avatar = Avatar(
                     creator=creator,
                     price=int(avatar_price) * 100,
-                    createdAt=datetime.now(),
-                    name=name).save()
+                    createdAt=time,
+                    name=name)
+                avatar.photo.put(photo, content_type='image/png', filename="avatar_" + str(time))
+                avatar.save()
                 return True
         except Exception as e:
             print('ServiceAvatar_add_avatar', e)

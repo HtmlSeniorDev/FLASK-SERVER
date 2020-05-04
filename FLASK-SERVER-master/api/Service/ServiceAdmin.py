@@ -9,7 +9,7 @@ from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
 from .ServiceSendMsg import ServiceSendMsg
 from api.Objects.Server_id import TYPE_INVISIBLE, TYPE_ADMIN, TYPE_MODERATOR
 from ..Objects.Server_id import TYPE_PM, SERVER_ID
-from ..Model.DataModel.GetUserTypeModel import GetUserTypeModel
+from ..Models.DataModel.GetUserTypeModel import GetUserTypeModel
 
 
 class ServiceAdmin:
