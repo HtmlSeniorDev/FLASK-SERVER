@@ -11,7 +11,7 @@ class User(Document):
     firstName = StringField(max_length=16)
     lastName = StringField(max_length=16)
     email = StringField(max_length=20)
-    sex = IntField(default=0, max_length=1, choices=GENDER_CHOICE.keys(),required=True)
+    sex = IntField(default=0, max_length=1, choices=GENDER_CHOICE.keys(), required=True)
     color = IntField()
     type = IntField()
     registrationDate = DateTimeField()
