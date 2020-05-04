@@ -11,6 +11,7 @@ class ServiceCheckBanned:
     Unban = BannedUser()
     Log_Message = ServiceMessages()
 
+    # todo переделать через модель
     def check_banned(self, id_user, imei):  # доделать список кто снимает
         try:
             self.User.change_information_user(id_user, {'regDeviceId': str(imei)})

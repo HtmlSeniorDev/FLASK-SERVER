@@ -9,7 +9,7 @@ registration_blueprint = Blueprint('registration_blueprint', __name__, )
 def registration(login: str, password: str, nick: str, colornick: int) -> jsonify:
     try:
         User(login=login, password=password, nic=nick, firstName="", lastName="", email="", sex=int(0),
-             color=int(colornick), type=int(1), registrationDate=datetime.now(), balace=int(5000), vic=int(0),
+             color=int(colornick), type=int(1), registrationDate=datetime.now(), balace=int(50000), vic=int(0),
              regDeviceId=str("0"), lastVisit=datetime.now()).save()
         return jsonify({'reg': True})
     except Exception as e:

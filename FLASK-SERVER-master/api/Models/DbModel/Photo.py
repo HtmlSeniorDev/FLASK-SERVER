@@ -1,5 +1,5 @@
 from mongoengine import Document
-from mongoengine import StringField, DateTimeField, BooleanField, ReferenceField, CASCADE
+from mongoengine import StringField, DateTimeField, BooleanField, ReferenceField, CASCADE, FileField
 from .UserModel import User
 
 
@@ -7,6 +7,7 @@ class Photo(Document):
     privated = BooleanField()
     createdAt = DateTimeField()
     description = StringField()
+    photo = FileField()
     user = ReferenceField(User, reverse_delete_rule=CASCADE)
     meta = {'collection': 'photos'}
 

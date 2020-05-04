@@ -2,7 +2,7 @@ import json
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 from db import mongo
-from flask import request,Blueprint
+from flask import request, Blueprint
 from ..Repository.UsersDao import UsersDao
 from ..Service.ServiceProfile import ServiceProfile
 from ..Objects.Server_id import SERVER_ADDRESS
@@ -103,7 +103,7 @@ def get_profile_photos(id_user):
             private = photo['privated']
             description = photo['description']
             create = photo['createdAt']
-            dict_user['url'] = 'http://185.231.154.198:5000/attachments/photos-' + str(photos_id)
+            dict_user['url'] = 'http://185.231.154.198:5000/photos/' + str(photos_id)
             dict_user['privated'] = private
             dict_user['description'] = description
             dict_user['key'] = photos_id
@@ -119,6 +119,7 @@ def get_profile_photos(id_user):
 
     except Exception:
         print('photo exept profile')
+
 
 @edit_profile_blueprint.route("/edit/profile/", methods=['POST'])  # user nick search
 def edit_profile():
@@ -151,32 +152,15 @@ def edit_profile():
 def add_photo_profile():
     try:
         profile = ServiceProfile()
-        res = request.get_json()
-        id_nick = res['id_nick']
-        privated = res['privated']
-        description = res['description']
-        return dumps({"name_photo": profile.add_photo(id_nick, privated, description)})
+        id_nick = request.form.get('id_nick')
+        privated = request.form.get('privated')
+        description = request.form.get('description')
+        photo = request.files['photo']
+        return dumps({"status": profile.add_photo(id_nick, privated, description, photo)})
 
     except Exception as e:
 
         print(e)
-
-        return {"name_photo": False}
-
-
-@upload_photo_to_profile_blueprint.route("/upload/photo/", methods=['POST'])  # user nick search
-def upload_photo_profile():
-    try:
-        mongo.save_file("photos-" + request.files['photo'].filename, request.files["photo"], metadata={
-            "_contentType": "image/png",
-            "_class": "com.mongodb.BasicDBObject"
-        }, content_type='')
-
-        return {"status": True}
-
-    except Exception as e:
-
-        print('upload_photo_profile', e)
 
         return {"status": False}
 

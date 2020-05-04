@@ -8,6 +8,7 @@ from ..Repository.MessagesDao import MessagesDao
 import json
 
 
+# todo переделать через модель
 class ServiceFindPersonalRooms:
     Private = PersonalRoomsDao()
     USERS = UsersDao()

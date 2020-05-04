@@ -11,10 +11,11 @@ class ServiceProfile:
     Photos = PhotosDao()
 
     @staticmethod
-    def add_photo(id_user, privated, description) -> bool:
+    def add_photo(id_user, privated, description, photo):
         try:
-            Photo(user=id_user, description=description, privated=privated, createdAt=datetime.now()).save()
-
+            photo_profile = Photo(user=id_user, description=description, privated=privated, createdAt=datetime.now())
+            photo_profile.photo.put(photo, content_type='image/jpeg', filename="user_" + str(id_user))
+            photo_profile.save()
             return True
 
         except Exception as e:
@@ -23,7 +24,7 @@ class ServiceProfile:
             return False
 
     @staticmethod
-    def del_photo(id_photo) -> bool:
+    def del_photo(id_photo):
         try:
 
             Photo.objects(id=ObjectId(id_photo)).delete()
@@ -36,7 +37,7 @@ class ServiceProfile:
             return False
 
     @staticmethod
-    def set_avatar_photo(id_user, id_photo) -> bool:
+    def set_avatar_photo(id_user, id_photo):
         try:
 
             User.objects(id=ObjectId(id_user)).update_one(

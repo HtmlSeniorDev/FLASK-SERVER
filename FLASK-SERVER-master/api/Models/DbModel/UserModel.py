@@ -11,16 +11,14 @@ class User(Document):
     firstName = StringField(max_length=16)
     lastName = StringField(max_length=16)
     email = StringField(max_length=20)
-    sex = IntField(default=0, max_length=1, choices=GENDER_CHOICE.keys(),
-                   required=True)
+    sex = IntField(default=0, max_length=1, choices=GENDER_CHOICE.keys(),required=True)
     color = IntField()
-    type = IntField(
-        default=1)  # Тип пользователя(1-пользователь,2-админ,4-модератор,8-забаненный,16-невидимка,32-супербан
+    type = IntField()
     registrationDate = DateTimeField()
     balace = IntField(min_value=0)
     vic = IntField()
-    regDeviceId = StringField(max_length=20)  # Имеи устройства
-    lastVisit = DateTimeField()  # Последнее посещение
+    regDeviceId = StringField(max_length=20)
+    lastVisit = DateTimeField()
     avatarLink = StringField()
     avatarEndAt = DateTimeField()
 

@@ -1,13 +1,15 @@
 from mongoengine import Document, ReferenceField, CASCADE
-from mongoengine import StringField, DateTimeField
+from mongoengine import DateTimeField
+
+from .GiftModel import Gift
 from .UserModel import User
 
 
 class UserGiftsModel(Document):
     user = ReferenceField(User, reverse_delete_rule=CASCADE)
-    gift = StringField()
+    gift = ReferenceField(Gift, reverse_delete_rule=CASCADE)
     date = DateTimeField()
-    user_from = StringField()
+    user_from = ReferenceField(User,default=None)
     meta = {'collection': 'usergifts'}
 
     def __str__(self) -> str:

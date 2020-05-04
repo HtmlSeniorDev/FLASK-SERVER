@@ -23,7 +23,7 @@ from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_a
 
 from api.Mapping.PortalMapping import WeddingList_blueprint, Run_line_blueprint
 
-from api.Mapping.AdminMapping import AdminList_blueprint, moderator_list_blueprint, found_user_banned_blueprint, \
+from api.Mapping.AdminMapping import AdminList_blueprint, moderator_list_blueprint,  \
     invisible_list_blueprint, \
     Unban_Actions_blueprint, add_avatar_admin_blueprint, update_avatar_admin_blueprint, \
     delete_avatar_admin_blueprint, add_gift_admin_blueprint, upload_gift_admin_blueprint, update_gift_admin_blueprint, \
@@ -83,7 +83,6 @@ app.register_blueprint(Get_profile_photos_blueprint)
 app.register_blueprint(invisible_list_blueprint)
 app.register_blueprint(moderator_list_blueprint)
 app.register_blueprint(last_room_blueprint)
-app.register_blueprint(found_user_banned_blueprint)
 app.register_blueprint(registration_blueprint)
 app.register_blueprint(autharization_blueprint)
 app.register_blueprint(get_attachments_gift_blueprint)
