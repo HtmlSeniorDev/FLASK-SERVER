@@ -1,8 +1,6 @@
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 import json
-from datetime import datetime
-from datetime import timedelta
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
 from .ServiceColor import ServiceColor
@@ -10,8 +8,8 @@ from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
 from .ServiceSendMsg import ServiceSendMsg
 from api.Objects.Server_id import TYPE_INVISIBLE
 from .ServiceValidation import ServiceValidation
-from ..Model.DbModel.UserModel import User
-from ..Model.DataModel.GetUserTypeModel import GetUserTypeModel
+from ..Models.DataModel.GetUserTypeModel import GetUserTypeModel
+from ..Models.DbModel.UserModel import User
 
 
 class ServiceAdmin:

@@ -1,9 +1,9 @@
 class ListAvatarsModel:
-    def __init__(self, avatar_id: str, url: str, price:int, name: str):
-        self.avatar_id: str = avatar_id
-        self.url: str = url
-        self.price: int = price
-        self.name: str = name
+    def __init__(self, avatar_id, url, price, name):
+        self.avatar_id = avatar_id
+        self.url = url
+        self.price = price
+        self.name = name
 
     def serialize(self):
         return {

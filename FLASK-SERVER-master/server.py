@@ -19,7 +19,7 @@ from api.Mapping.ZagsMapping import Zags_Request_Decline_blueprint, Zags_Request
 
 from api.Mapping.PersonalRoomsMapping import find_personalrooms_blueprint
 
-from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint,uploads_attachments_blueprint
+from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint,get_attachments_photos_profile_blueprint
 
 from api.Mapping.PortalMapping import WeddingList_blueprint, Run_line_blueprint
 
@@ -97,6 +97,8 @@ app.register_blueprint(create_private_blueprint)
 app.register_blueprint(users_list_view_blueprint)
 app.register_blueprint(other_function_blueprint)
 app.register_blueprint(delete_personalrooms_blueprint)
+app.register_blueprint(get_attachments_photos_profile_blueprint
+)
 
 # JOB = ServiceScheduler()
 # scheduler = BackgroundScheduler()

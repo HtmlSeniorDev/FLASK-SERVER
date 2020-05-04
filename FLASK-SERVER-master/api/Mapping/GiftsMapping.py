@@ -1,4 +1,3 @@
-from flask import Blueprint
 from bson.objectid import ObjectId
 from limiter import limiter
 from db import mongo
@@ -25,7 +24,8 @@ def buy_avatar():
         from_id = str(res['from_id'])
         result = api_buy.send_gifts(int(gift_price) / 100, user_id, gift_id, from_id)
         return jsonify({"Accept": result})
-    except Exception:
+    except Exception as e:
+        print(e)
 
         return 'no'
 

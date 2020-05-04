@@ -1,5 +1,5 @@
 class GetUserTypeModel:
-    def __init__(self, user_id: str, nic: str, color: int):
+    def __init__(self, user_id, nic, color):
         self.user_id = user_id
         self.nic = nic
         self.color = color

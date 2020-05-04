@@ -1,10 +1,10 @@
 class ListGiftsModel:
-    def __init__(self, gift_id: str, url: str, price: int, name: str, description: str):
-        self.avatar_id: str = gift_id
-        self.url: str = url
-        self.price: int = price
-        self.name: str = name
-        self.description: str = description
+    def __init__(self, gift_id, url, price, name, description):
+        self.avatar_id = gift_id
+        self.url = url
+        self.price = price
+        self.name = name
+        self.description = description
 
     def serialize(self):
         return {
