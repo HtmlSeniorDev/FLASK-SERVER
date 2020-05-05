@@ -141,7 +141,7 @@ def add_invisible():
         return str(e)
 
 
-@add_avatar_admin_blueprint.route("/add/avatar/admin", methods=['POST'], strict_slashes=False)  # user nick search
+@add_avatar_admin_blueprint.route("/add/avatar/admin", methods=['GET', 'POST'], strict_slashes=False)  # user nick search
 def add_avatar_admin():
     try:
         Avatar = ServiceAvatar()

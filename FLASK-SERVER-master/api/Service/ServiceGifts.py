@@ -6,6 +6,7 @@ from api.Repository.GiftsDao import GiftsDao
 from api.Repository.UsersDao import UsersDao
 from .ServiceMessages import ServiceMessages
 from ..Models.DbModel.GiftModel import Gift
+from ..Models.DbModel.UserModel import User
 from ..Objects.Server_id import SERVER_ID, SERVER_ADDRESS
 from bson.objectid import ObjectId
 from ..Models.DataModel.ListGiftsModel import ListGiftsModel
@@ -101,7 +102,7 @@ class ServiceGifts:
                 return False
             else:
                 Gift.objects(id=ObjectId(gift_id)).update_one(
-                    set__creator=creator,
+                    set__creator=User(id=creator),
                     set__description=description,
                     set__price=int(gift_price) * 100,
                     set__createdAt=datetime.now(),

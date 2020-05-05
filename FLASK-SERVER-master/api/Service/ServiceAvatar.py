@@ -1,10 +1,7 @@
 import json
-from datetime import datetime
-from datetime import timedelta
-
+from datetime import datetime,timedelta
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
 from ..Models.DataModel.ListAvatarsModel import ListAvatarsModel
@@ -77,12 +74,13 @@ class ServiceAvatar:
             if not validation:
                 return False
             else:
-                Avatar.objects(id=ObjectId(avatar_id)).update_one(
-                    set__creator=creator,
+             Avatar.objects(id=ObjectId(avatar_id)).update_one(
+                    set__creator=User(id=creator),
                     set__price=int(avatar_price) * 100,
                     set__createdAt=datetime.now(),
                     set__name=name
                 )
+
         except Exception as e:
             print('ServiceAvatar_update_avatar', e)
             pass

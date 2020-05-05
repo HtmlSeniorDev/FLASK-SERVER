@@ -96,7 +96,7 @@ def get_profile_photos(id_user):
         dict_user = {}
 
         online_users = mongo.db.photos
-        photos_object = dumps(online_users.find({'user': str(id_user)}))
+        photos_object = dumps(online_users.find({'user': ObjectId(str(id_user))}))
 
         for photo in json.loads(photos_object):
             photos_id = photo['_id']['$oid']
