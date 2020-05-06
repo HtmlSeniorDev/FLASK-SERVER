@@ -78,7 +78,7 @@ def found_user_room(room_id):
             pass
 
         else:
-            lists_users = ({'user': rus + '', 'color': color + '', 'user_id': g + '', })
+            lists_users = ({'user': rus + '', 'color': color, 'user_id': g + '', })
 
             arr.append(lists_users)
 
