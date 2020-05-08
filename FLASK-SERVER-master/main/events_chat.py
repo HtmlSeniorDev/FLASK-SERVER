@@ -121,7 +121,6 @@ def text(message):
     message['createdAt'] = datetime.now()
     message['place'] = message['room']
     del message['room']
-
     write_last_message(message)
 
 

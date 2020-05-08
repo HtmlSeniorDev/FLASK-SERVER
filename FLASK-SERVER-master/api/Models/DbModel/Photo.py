@@ -1,15 +1,16 @@
-from mongoengine import Document
-from mongoengine import StringField, DateTimeField, BooleanField, ReferenceField, CASCADE, FileField
-from .UserModel import User
+from mongoengine import Document, CASCADE, ReferenceField
+from mongoengine import StringField, DateTimeField, BooleanField, FileField
+
+
+# todo при установки аватарки пользователя,она не работает связать поле photo в модели User
+from api.Models.DbModel.UserModel import User
 
 
 class Photo(Document):
     privated = BooleanField()
     createdAt = DateTimeField()
-    description = StringField()
-    photo = FileField()
+    description = StringField(max_length=20)
     user = ReferenceField(User, reverse_delete_rule=CASCADE)
+    photo = FileField()
     meta = {'collection': 'photos'}
 
-    def __str__(self) -> str:
-        return 'New_USER_PHOTO: ' + self.user

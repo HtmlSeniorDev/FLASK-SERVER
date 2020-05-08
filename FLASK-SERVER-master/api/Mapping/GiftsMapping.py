@@ -80,7 +80,7 @@ def found_user_gift(nic):
         search_description = mongo.db.gifts.find_one({'_id': ObjectId(str(gifts))})
         get_description = search_description['description']
         arr_gifts_dict['description'] = str(get_description)
-        arr_gifts_dict['url'] = SERVER_ADDRESS + "/attachments/gifts-" + str(gifts)
+        arr_gifts_dict['url'] = SERVER_ADDRESS + "/attachments/gift/" + str(gifts)
         arr_gifts_dict['id'] = str(gifts_id)
         arr_gifts.append(dict(arr_gifts_dict))
         arr_gifts_id.append(str(gifts_id))

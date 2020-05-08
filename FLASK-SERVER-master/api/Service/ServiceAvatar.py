@@ -1,5 +1,5 @@
 import json
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from api.Repository.AvatarDao import AvatarDao
@@ -20,11 +20,11 @@ class ServiceAvatar:
     def combine_avatar_list(self):
         try:
             return list(map(lambda avatar: ListAvatarsModel(
-             avatar['_id']['$oid'],
-             self.avatar_url + avatar['_id']['$oid'],
-             int(avatar['price']),
-             avatar['name']),
-             json.loads(dumps(self.Avatar.get_avatar_list()))))
+                avatar['_id']['$oid'],
+                self.avatar_url + avatar['_id']['$oid'],
+                int(avatar['price']),
+                avatar['name']),
+                            json.loads(dumps(self.Avatar.get_avatar_list()))))
         except Exception as e:
             print('combine_avatar_list', e)
             pass
@@ -74,7 +74,7 @@ class ServiceAvatar:
             if not validation:
                 return False
             else:
-             Avatar.objects(id=ObjectId(avatar_id)).update_one(
+                Avatar.objects(id=ObjectId(avatar_id)).update_one(
                     set__creator=User(id=creator),
                     set__price=int(avatar_price) * 100,
                     set__createdAt=datetime.now(),

@@ -116,9 +116,8 @@ def get_profile_photos(id_user):
         complete = dumps(dict_api)
 
         return complete
-
-    except Exception:
-        print('photo exept profile')
+    except Exception as e:
+        print(e, 'photo exept profile')
 
 
 @edit_profile_blueprint.route("/edit/profile/", methods=['POST'])  # user nick search

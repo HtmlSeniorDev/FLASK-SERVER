@@ -41,7 +41,7 @@ class ServiceProfile:
         try:
 
             User.objects(id=ObjectId(id_user)).update_one(
-                set__photo=id_photo,
+                set__photo=Photo(id=id_photo),
             )
             return True
 

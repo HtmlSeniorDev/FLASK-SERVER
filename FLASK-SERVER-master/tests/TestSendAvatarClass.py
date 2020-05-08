@@ -1,9 +1,9 @@
 import requests
 
-url = ' http://localhost:5000/add/invisible/'
+url = ' http://localhost:5000/set/photo/profile/'
 data = ({
-	"id_user": "5ea07e58a21c4078c28f3f20",
-	"id_admin": "5e5f33c90d3f82984060e4d2"})
+	"photo_id": "5eb35c47d0645ca462be0be3",
+	"user_id": "5eaf4a1884fbb8f8c0311f1f"})
 res = requests.post(url, json=data)
 
 print(res.text)

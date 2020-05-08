@@ -97,8 +97,7 @@ app.register_blueprint(create_private_blueprint)
 app.register_blueprint(users_list_view_blueprint)
 app.register_blueprint(other_function_blueprint)
 app.register_blueprint(delete_personalrooms_blueprint)
-app.register_blueprint(get_attachments_photos_profile_blueprint
-)
+app.register_blueprint(get_attachments_photos_profile_blueprint)
 
 # JOB = ServiceScheduler()
 # scheduler = BackgroundScheduler()
