@@ -27,11 +27,10 @@ def found_user(nic):
         data_dict = {}
         online_users = mongo.db.users
         nick = (online_users.find_one({'_id': ObjectId(str(nic))}))
-        face_avatar = str(nick['photo'])
-        if len(face_avatar) >= 1:
-            photo = 'photos-' + face_avatar
-            url_att = SERVER_ADDRESS + '/attachments/' + photo
-    except Exception:
+        photo = str(nick['photo'])
+        if len(photo) >= 1:
+            url_att = SERVER_ADDRESS + '/photos/' + photo
+    except Exception as e:
         url_att = 'image_exist'
 
     nick.update({'photo': url_att})
