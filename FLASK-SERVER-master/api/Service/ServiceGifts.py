@@ -6,6 +6,7 @@ from api.Repository.GiftsDao import GiftsDao
 from api.Repository.UsersDao import UsersDao
 from .ServiceMessages import ServiceMessages
 from ..Models.DbModel.GiftModel import Gift
+from ..Models.DbModel.UserGiftsModel import UserGiftsModel
 from ..Models.DbModel.UserModel import User
 from ..Objects.Server_id import SERVER_ID, SERVER_ADDRESS
 from bson.objectid import ObjectId
@@ -48,25 +49,13 @@ class ServiceGifts:
                 return False
             else:
 
-                date_gift = datetime.now() + timedelta(hours=5),
                 balance_user = balance_user - gift_price
                 object_change = {
                     "balace": int(balance_user),
-
                 }
 
-                object_user_gifts = {
-
-                    "user": str(user_id),
-                    "gift": str(gift_id),
-                    "date": date_gift[0],
-                    "from": str(from_id),
-
-                }
-
-                dumps(self.Gifts.insert_gift(object_user_gifts))
-                self.Msg.create_rooms(SERVER_ID, str(user_id),
-                                      self.Text_Sending)
+                UserGiftsModel(user=User(id=user_id), gift=Gift(id=gift_id), date=datetime.now(), from_=User(from_id))
+                # dumps(self.Gifts.insert_gift(object_user_gifts))
                 dumps(self.User.change_information_user(from_id, object_change))
 
                 return True

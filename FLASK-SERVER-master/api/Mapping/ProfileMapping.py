@@ -163,6 +163,7 @@ def add_photo_profile():
         return {"status": False}
 
 
+# todo не удаляется из аватара профиля
 @delete_photo_to_profile_blueprint.route("/delete/photo/profile/", methods=['POST'])  # user nick search
 def delete_photo_profile():
     try:
