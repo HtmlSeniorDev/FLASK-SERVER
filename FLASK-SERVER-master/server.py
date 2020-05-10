@@ -19,11 +19,12 @@ from api.Mapping.ZagsMapping import Zags_Request_Decline_blueprint, Zags_Request
 
 from api.Mapping.PersonalRoomsMapping import find_personalrooms_blueprint
 
-from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint,get_attachments_photos_profile_blueprint
+from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint, \
+    get_attachments_photos_profile_blueprint
 
 from api.Mapping.PortalMapping import WeddingList_blueprint, Run_line_blueprint
 
-from api.Mapping.AdminMapping import AdminList_blueprint, moderator_list_blueprint,  \
+from api.Mapping.AdminMapping import AdminList_blueprint, moderator_list_blueprint, \
     invisible_list_blueprint, \
     Unban_Actions_blueprint, add_avatar_admin_blueprint, update_avatar_admin_blueprint, \
     delete_avatar_admin_blueprint, add_gift_admin_blueprint, upload_gift_admin_blueprint, update_gift_admin_blueprint, \

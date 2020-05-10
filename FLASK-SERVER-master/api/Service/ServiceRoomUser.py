@@ -1,25 +1,26 @@
+from bson import ObjectId
+from api.Models.DbModel.RoomModel import Room
+from api.Models.DbModel.UserInRoom import UserInRoom
+from api.Models.DbModel.UserModel import User
 
-from api.Repository.UserInRoomDao import UserInRoomDao
+"""Cервис удаления и добавления юзера в комнату"""
 
-
+#todo  check in client
 class ServiceRoomUser:
-    ROOM = UserInRoomDao()
+    """Добавляем пользователя в комнату"""
 
-    def insert_user_in_room(self, user, room):
-
+    @staticmethod
+    def insert_user_in_room(user, room):
         try:
-            self.ROOM.insert_user_to_userinroom({"user": user, "room": room})
-
+            UserInRoom(user=User(id=user), room=Room(id=room))
         except Exception as e:
-
             print(e, 'ServiceRoomUser.insert_user_in_room')
-            pass
 
-    def delete_user_in_room(self,user,room):
+    """Удаляем пользователя из комнаты"""
+
+    @staticmethod
+    def delete_user_in_room(user, room):
         try:
-            self.ROOM.delete_user_to_userinroom({"user": user, "room": room})
-
+            UserInRoom.objects(user=ObjectId(user), room=ObjectId(room)).delete()
         except Exception as e:
-
             print(e, 'delete_user_in_room.insert_user_in_room')
-            pass

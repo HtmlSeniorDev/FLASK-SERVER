@@ -24,7 +24,7 @@ class ServiceValidation:
 
         return True
 
-    def checked_balance(self, buyer, product_price)->float:
+    def checked_balance(self, buyer, product_price):
         response_user = dumps(self.User.get_information_user(buyer))
         serialize_user = json.loads(response_user)
         balance_user = float(serialize_user['balace'])

@@ -1,9 +1,10 @@
 import json
 from flask import Blueprint, request, jsonify
 from ..Service.ServiceRooms import ServiceRooms
-from bson.json_util import dumps,loads
+from bson.json_util import dumps, loads
 from db import mongo
 from bson.objectid import ObjectId
+
 users_list_view_blueprint = Blueprint('users_list_view_blueprint', __name__, )
 Update_Category_blueprint = Blueprint('Update_Category_blueprint', __name__, )
 Delete_Category_blueprint = Blueprint('Delete_Category_blueprint', __name__)
@@ -16,6 +17,7 @@ users_room_blueprint = Blueprint('users_room_blueprint', __name__, )
 last_room_blueprint = Blueprint('last_room_blueprint', __name__, )
 
 useri = []
+
 
 @last_room_blueprint.route("/last/room/", methods=['POST'], strict_slashes=False)  # search last room
 def last_room():
@@ -42,56 +44,12 @@ def last_room():
 
         return 'incorrect request'
 
+
+# todo check this work
 @users_room_blueprint.route("/usersinroom/<room_id>", methods=['GET'])  # users in room
-def found_user_room(room_id):
-    online_users = mongo.db.userInRoom
-    user_room = dumps(online_users.find({'room': str(room_id)}).limit(200).sort('_id', -1), sort_keys=False, indent=4,
-                      ensure_ascii=False, separators=(',', ': '))
-    online_users1 = mongo.db.userInRoom
-    user_room1 = list(online_users1.find({'room': str(room_id)}))
-    count1 = 0
-    global us
-    for us in user_room1:
-        count1 += 1
-        us = us['user']
-        useri.append(us)
-    print(count1)
-    global v
-    global user
-    arr = []
-    user = {'data': []}
-    count = 0
-    for _ in range(count1):
-        count += 1
-        v = loads(user_room)
-        b = v[count - 1]
-        print(b)
-        g = (b['user'])
-        print(g)
-        online_users = mongo.db.users
-        nick = (online_users.find_one({'_id': ObjectId(str(g))}))
-        rus = (nick['nic'])
-        color = (nick['color'])
-        if rus == None:
+def found_user_in_room(room_id):
+    return jsonify(ServiceRooms.user_in_room(room_id))
 
-            print('users empty')
-            pass
-
-        else:
-            lists_users = ({'user': rus + '', 'color': color, 'user_id': g + '', })
-
-            arr.append(lists_users)
-
-    url_by_dict = {i['user']: i for i in arr}
-    new_items = list(url_by_dict.values())
-    counts = 0
-    for i in new_items[::-1]:
-        counts += 1
-        user['data'].append(i)
-
-    complete = dumps((user), sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
-
-    return complete
 
 @delete_personalrooms_blueprint.route("/delete/personalrooms/<nic_id>", methods=['GET'])  # user nick search
 def delete_personal_rooms(nic_id):

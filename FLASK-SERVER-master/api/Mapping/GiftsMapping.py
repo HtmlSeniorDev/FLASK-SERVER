@@ -14,10 +14,11 @@ gifts_blueprint = Blueprint('gifts_blueprint', __name__, )
 
 
 @GiftRequestClient_blueprint.route("/Gift/send/", methods=['POST'], strict_slashes=False)  # user search objectid
-def buy_avatar():
+def gift_send():
     try:
         api_buy = ServiceGifts()
         res = request.get_json()
+        print(res)
         gift_price = int((res['price']))
         user_id = str(res['user_id'])
         gift_id = str(res['gift_id'])
@@ -62,8 +63,7 @@ def found_user_gift(nic):
     data_dict = {}
     print('nic----', str(nic))
     gift_profile = mongo.db.usergifts
-    get_gift = dumps(gift_profile.find({'user': (str(nic))}))
-    print(get_gift, 'get fift')
+    get_gift = dumps(gift_profile.find({'user': (ObjectId(str(nic)))}))
     count = 0
     arr_gifts_dict = {'url': []}
     arr_gifts = []
@@ -75,7 +75,7 @@ def found_user_gift(nic):
     for _ in range(count):
         count_list += 1
         complete_msg = json.loads(get_gift)[count_list]
-        gifts = complete_msg['gift']
+        gifts = complete_msg['gift']["$oid"]
         gifts_id = complete_msg['_id']['$oid']
         search_description = mongo.db.gifts.find_one({'_id': ObjectId(str(gifts))})
         get_description = search_description['description']

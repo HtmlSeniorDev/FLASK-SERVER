@@ -16,6 +16,8 @@ class User(Document):
     color = IntField()
     photo = StringField(max_length=50)
     type = IntField()
+    city = StringField(max_length=20)
+    bday = DateTimeField()
     registrationDate = DateTimeField()
     balace = IntField(min_value=0)
     vic = IntField()
@@ -28,3 +30,10 @@ class User(Document):
 
     def __str__(self) -> str:
         return 'New User: ' + str(self.nic)
+
+    def serialize_user_in_room(self):
+        return {
+            'id': str(self.id),
+            'color': self.color,
+            'nic': self.nic,
+        }

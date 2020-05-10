@@ -9,7 +9,7 @@ class UserGiftsModel(Document):
     user = ReferenceField(User, reverse_delete_rule=CASCADE)
     gift = ReferenceField(Gift, reverse_delete_rule=CASCADE)
     date = DateTimeField()
-    from_ = ReferenceField(User, default=None)
+    from_ = ReferenceField(User, reverse_delete_rule=CASCADE)
     meta = {'collection': 'usergifts'}
 
     def __str__(self) -> str:

@@ -19,6 +19,7 @@ class ServiceAvatar:
 
     def combine_avatar_list(self):
         try:
+            """Парсим список аватаров"""
             return list(map(lambda avatar: ListAvatarsModel(
                 avatar['_id']['$oid'],
                 self.avatar_url + avatar['_id']['$oid'],
@@ -31,10 +32,15 @@ class ServiceAvatar:
 
     def buy_avatars(self, avatar_price, user_id, avatar_id):
         try:
+            """Проверка баланса """
+
             validation = self.Validator.checked_balance(user_id, avatar_price)
             if not validation:
+                """Если у отправителя не хватает баланса """
+
                 return False
             else:
+
                 avatar_end_at = datetime.now() + timedelta(days=30),
                 balance_user = validation - avatar_price
                 User.objects(id=ObjectId(user_id)).update_one(
