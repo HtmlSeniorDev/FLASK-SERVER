@@ -5,14 +5,15 @@ from api.Models.DbModel.UserModel import User
 
 """Cервис удаления и добавления юзера в комнату"""
 
-#todo  check in client
+
+# todo  check in client
 class ServiceRoomUser:
     """Добавляем пользователя в комнату"""
 
     @staticmethod
     def insert_user_in_room(user, room):
         try:
-            UserInRoom(user=User(id=user), room=Room(id=room))
+            UserInRoom(user=User(id=user), room=Room(id=room)).save()
         except Exception as e:
             print(e, 'ServiceRoomUser.insert_user_in_room')
 

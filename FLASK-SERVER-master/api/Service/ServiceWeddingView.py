@@ -1,5 +1,8 @@
 from bson.json_util import dumps
 import json
+
+from flask import jsonify
+
 from api.Repository.UsersDao import UsersDao
 from api.Repository.WeddingDao import WeddingDao
 from api.Objects.Server_id import SERVER_ADDRESS
@@ -39,14 +42,14 @@ class ServiceWeddingView:
                 try:
 
                     photo0 = username0_data['photo']
-                    one_wedding['photo0'] = SERVER_ADDRESS + '/attachments/photos-' + str(photo0)
+                    one_wedding['photo0'] = SERVER_ADDRESS + '/photos/' + str(photo0)
                 except Exception as e:
                     one_wedding['photo0'] = 'image_exist'
                     print(e)
                 try:
 
                     photo1 = username1_data['photo']
-                    one_wedding['photo1'] = SERVER_ADDRESS + '/attachments/photos-' + str(photo1)
+                    one_wedding['photo1'] = SERVER_ADDRESS + '/photos/' + str(photo1)
                 except Exception as e:
                     one_wedding['photo1'] = 'image_exist'
                     print(e)
@@ -55,7 +58,7 @@ class ServiceWeddingView:
                 one_wedding['username1'] = str(nickname1)
 
                 array_weddings.insert(count, one_wedding)
-            return json.dumps(array_weddings[::-1], separators=(',', ':'))
+            return jsonify(array_weddings[::-1])
         except Exception as e:
 
             print('make_view_weddings_list', e)

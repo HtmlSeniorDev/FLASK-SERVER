@@ -8,8 +8,9 @@ registration_blueprint = Blueprint('registration_blueprint', __name__, )
 @registration_blueprint.route("/registration/<login>/<password>/<nick>/<colornick>", methods=['GET'])
 def registration(login: str, password: str, nick: str, colornick: int) -> jsonify:
     try:
-        User(login=login, password=password, nic=nick, firstName="", lastName="", email="", sex=int(0),
-             color=int(colornick), type=int(1), registrationDate=datetime.now(), balace=int(50000), vic=int(0),
+        timereg = datetime.now()
+        User(login=login, password=password, nic=nick, sex=int(0),
+             color=int(colornick), type=int(1), registrationDate=timereg, bday=timereg, balace=int(50), vic=int(0),
              regDeviceId=str("0"), lastVisit=datetime.now()).save()
         return jsonify({'reg': True})
     except Exception as e:

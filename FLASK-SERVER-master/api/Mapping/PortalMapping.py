@@ -10,7 +10,6 @@ Run_line_blueprint = Blueprint('Run_line_blueprint', __name__)
 def get_weddings_list():
     try:
         api_wedding_list = ServiceWeddingView()
-
         return api_wedding_list.get_weddings_list()
 
     except Exception as e:

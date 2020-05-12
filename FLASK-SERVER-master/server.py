@@ -6,7 +6,7 @@ from api.Mapping.GiftsMapping import delete_gifts_blueprint, GiftsListBuy_bluepr
 
 from api.Mapping.ProfileMapping import edit_profile_blueprint, profile_blueprint, add_profile_photo_blueprint, \
     upload_photo_to_profile_blueprint, delete_photo_to_profile_blueprint, set_avatar_photo_to_profile_blueprint, \
-    Get_profile_photos_blueprint
+    Get_profile_photos_blueprint, update_password_blueprint
 
 from api.other_function import other_function_blueprint
 from init import create_app
@@ -47,6 +47,8 @@ from init import socketio
 getdefaultencoding()
 
 app = create_app()
+
+app.register_blueprint(update_password_blueprint)
 app.register_blueprint(Run_line_blueprint)
 app.register_blueprint(update_gift_admin_blueprint)
 app.register_blueprint(delete_gift_admin_blueprint)

@@ -2,6 +2,8 @@ import json
 from datetime import datetime, timedelta
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+from flask_socketio import emit
+
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
 from ..Models.DataModel.ListAvatarsModel import ListAvatarsModel
@@ -48,7 +50,8 @@ class ServiceAvatar:
                     set__avatarEndAt=avatar_end_at[0],
                     set__balace=balance_user,
                 )
-
+                emit('update_avatar', {'avatarLink': str(avatar_id)}, user=user_id, broadcast=True,
+                     namespace='/chat')
                 return True
 
         except Exception as e:
@@ -64,7 +67,7 @@ class ServiceAvatar:
                 time = datetime.now()
                 avatar = Avatar(
                     creator=creator,
-                    price=int(avatar_price) * 100,
+                    price=int(avatar_price),
                     createdAt=time,
                     name=name)
                 avatar.photo.put(photo, content_type='image/png', filename="avatar_" + str(time))

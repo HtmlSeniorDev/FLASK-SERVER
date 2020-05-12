@@ -1,6 +1,7 @@
 from bson.json_util import dumps
 import json
 from api.Repository.UsersDao import UsersDao
+from main.events_chat import UserConnected
 from ..Objects.Server_id import TYPE_ADMIN, TYPE_MODERATOR
 
 
@@ -30,5 +31,10 @@ class ServiceValidation:
         balance_user = float(serialize_user['balace'])
         if balance_user < product_price:
             return False
+        return balance_user
 
-        return balance_user/100
+    @staticmethod
+    def check_session_sid(user_id):
+        for user in UserConnected:
+            if user['user'] == user_id:
+                return user['user']

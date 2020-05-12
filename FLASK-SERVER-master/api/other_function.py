@@ -6,14 +6,13 @@ from .Service.ServiceColor import ServiceColor
 from .Objects.Server_id import SERVER_ADDRESS
 
 other_function_blueprint = Blueprint('other_function_blueprint', __name__, )
-Color = ServiceColor()
 
 
 @other_function_blueprint.route("/check/login/<iduser>", methods=['GET'])  # user nick search
 def found_user_login(iduser):
     online_users = mongo.db.users
     nick = (online_users.find_one({'_id': ObjectId(str(iduser))}))
-    color = Color.get_color(nick['color'])
+    color = nick['color']
     if 'avatarLink' in nick:
         avatar = SERVER_ADDRESS + '/attachments/avatar/' + nick['avatarLink']
     else:

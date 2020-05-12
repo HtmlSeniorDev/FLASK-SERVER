@@ -17,7 +17,6 @@ uploads_attachments_blueprint = Blueprint('uploads_attachments_blueprint', __nam
 def get_attachments_photos(file_id):
     try:
         return send_file(io.BytesIO(Photo.objects.get(id=ObjectId(file_id)).photo.read()),
-
                          mimetype='image/png')
 
     except Exception as e:

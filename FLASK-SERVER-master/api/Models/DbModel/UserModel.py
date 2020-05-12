@@ -1,10 +1,9 @@
-from mongoengine import Document, ReferenceField, DO_NOTHING
-from mongoengine import IntField, StringField, DateTimeField
-
-GENDER_CHOICE = {0: 'не известно', 1: 'мужской', 2: 'женский'}
+from mongoengine import Document
+from mongoengine import IntField, StringField, DateTimeField, ListField
 
 
 class User(Document):
+    GENDER_CHOICE = {0: 'не известно', 1: 'мужской', 2: 'женский'}
     login = StringField(max_length=16, unique=True)
     password = StringField(max_length=16)
     nic = StringField(max_length=16, unique=True)
@@ -12,7 +11,7 @@ class User(Document):
     lastName = StringField(max_length=16)
     email = StringField(max_length=20)
     about = StringField(max_length=40)
-    sex = IntField(default=0, max_length=1, choices=GENDER_CHOICE.keys(), required=True)
+    sex = IntField(max_length=2, default=0, choices=GENDER_CHOICE, required=True)
     color = IntField()
     photo = StringField(max_length=50)
     type = IntField()
@@ -25,7 +24,8 @@ class User(Document):
     lastVisit = DateTimeField()
     avatarLink = StringField()
     avatarEndAt = DateTimeField()
-
+    zags = StringField()
+    zagsRequest = ListField()
     meta = {'collection': 'users'}
 
     def __str__(self) -> str:
@@ -37,3 +37,25 @@ class User(Document):
             'color': self.color,
             'nic': self.nic,
         }
+
+    def serialize_profile_information(self):
+        return [dict({
+            'id': str(self.id),
+            'color': self.color,
+            'nic': self.nic,
+            "firstName": self.firstName,
+            "lastName": self.lastName,
+            "email": self.email,
+            "sex": self.GENDER_CHOICE[self.sex],
+            "type": self.type,
+            "registrationDate": self.sex,
+            "balace": self.balace,
+            "vic": self.vic,
+            "regDeviceId": self.regDeviceId,
+            "photo": self.photo,
+            "zags": self.zags,
+            "zagsRequest": self.zagsRequest,
+            "bday": str(self.bday)[:10],
+            "city": self.city,
+            "about": self.about
+        })]

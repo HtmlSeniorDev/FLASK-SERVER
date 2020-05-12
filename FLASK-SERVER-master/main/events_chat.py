@@ -16,7 +16,6 @@ from api.Repository.MessagesDao import MessagesDao
 
 User = UsersDao()
 Attachments = AttachmentsDao()
-ROOM_ACTION = ServiceRoomUser()
 MESSAGES_DAO = MessagesDao()
 UserConnected = []
 
@@ -56,9 +55,9 @@ def get_last_message() -> list:  # Получаем список последн�
 
 def insert_or_delete_user_room_to_db(selector, user, room):  # В зависимости от выбора del/add юзера в комнату
     if selector == 'connected':
-        ROOM_ACTION.insert_user_in_room(user, room)
+        ServiceRoomUser.insert_user_in_room(user, room)
     elif selector == 'disconnected':
-        ROOM_ACTION.delete_user_in_room(user, room)
+        ServiceRoomUser.delete_user_in_room(user, room)
 
 
 def update_leave_msg(user, room, nic):  # Обновляем модель сообщения для выхода из комнаты
@@ -96,6 +95,7 @@ def connect():
 def joined(msg):
     session['user'] = msg['user']
     session['room'] = msg['room']
+
     room = (session['room'])
     msg.update({'hideNic': True})
     key = uuid.uuid1()
@@ -104,7 +104,7 @@ def joined(msg):
     msg['message'] = ENTRY_TEXT
     join_room(room)
     emit('status', msg, room=room)
-    emit('last_message', get_last_message(), broadcast=False, user=session['user'])
+    emit('last_message', get_last_message()[0:20], broadcast=False, user=session['user'])
     insert_or_delete_user_room_to_db('connected', session['user'], room)
     write_socket_con(request.sid, session['user'], room, msg['nic'])
 

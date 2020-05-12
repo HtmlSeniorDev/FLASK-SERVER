@@ -2,11 +2,10 @@ import json
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 from db import mongo
-from flask import request, Blueprint
+from flask import request, Blueprint, jsonify
 from ..Repository.UsersDao import UsersDao
 from ..Service.ServiceProfile import ServiceProfile
-from ..Objects.Server_id import SERVER_ADDRESS
-
+update_password_blueprint = Blueprint('update_password_blueprint',__name__)
 edit_profile_blueprint = Blueprint('edit_profile_blueprint', __name__, )
 add_profile_photo_blueprint = Blueprint('add_profile_photo_blueprint', __name__, )
 upload_photo_to_profile_blueprint = Blueprint('upload_photo_to_profile_blueprint', __name__, )
@@ -17,74 +16,12 @@ profile_blueprint = Blueprint('profile_blueprint', __name__, )
 UserInfo = UsersDao()
 
 
-@profile_blueprint.route("/users/profile/<nic>", methods=['GET'])  # user nick search
-def found_user(nic):
+@profile_blueprint.route("/users/profile/<user_id>", methods=['GET'])  # user nick search
+def found_user_profile(user_id):
     try:
-        global data
-        global data_dict
-        global nick
-        data = []
-        data_dict = {}
-        online_users = mongo.db.users
-        nick = (online_users.find_one({'_id': ObjectId(str(nic))}))
-        photo = str(nick['photo'])
-        if len(photo) >= 1:
-            url_att = SERVER_ADDRESS + '/photos/' + photo
+        return jsonify(ServiceProfile.get_profile_information(user_id))
     except Exception as e:
-        url_att = 'image_exist'
-
-    nick.update({'photo': url_att})
-    nick.update({'avatarEndAt': '1'})
-    nick.update({'balace': int(nick['balace']) / 100})
-    nick.update({'login': '1'})
-    nick.update({'password': '1'})
-    if 'zags' in nick:
-        pass
-    else:
-        nick.update({'zags': ''})
-    if 'zagsRequest' in nick:
-        pass
-    else:
-        nick.update({'zagsRequest': []})
-    if 'bday' in nick:
-        global time
-        time = (nick['bday'])
-        try:
-            global time_bday
-            time_bday = time.strftime("%m/%d/%Y")
-            time_bday = time_bday.replace('/', '.')
-            nick.update({'bday': time_bday})
-        except Exception:
-            nick.update({'bday': time})
-            pass
-    color = nick['color']
-    nick.update({'bday': '2019'})
-    if 'city' in nick:
-        nick.update({'city': nick['city']})
-    else:
-        nick.update({'city': ''})
-    if 'about' in nick:
-        nick.update({'about': nick['about']})
-    else:
-        nick.update({'about': ''})
-    if ('firstName') in nick:
-        nick.update({'firstName': nick['firstName']})
-    else:
-        nick.update({'firstName': ''})
-    if 'lastName' in nick:
-        nick.update({'lastName': nick['lastName']})
-    else:
-        nick.update({'lastName': ''})
-    if nick['sex'] == 3:
-        nick.update({'sex': 'Не определен'})
-    elif nick['sex'] == 1:
-        nick.update({'sex': 'Мужской'})
-    elif nick['sex'] == 2:
-        nick.update({'sex': 'Женский'})
-    nick.update({'color': color})
-    data.append(nick)
-    data_dict['data'] = data
-    return dumps(data_dict, sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
+        print("profile_blueprint", e)
 
 
 @Get_profile_photos_blueprint.route("/users/photos/<id_user>", methods=['GET'])  # user nick search
@@ -119,30 +56,32 @@ def get_profile_photos(id_user):
         print(e, 'photo exept profile')
 
 
+# todo доделать отправку в сокет об изменениях цвета и  авиков и ника тд на клиент
 @edit_profile_blueprint.route("/edit/profile/", methods=['POST'])  # user nick search
 def edit_profile():
     try:
-        user = UsersDao()
+        """Перенаправляем запрос в сервис нужному методу"""
         res = request.get_json()
-        user.change_information_user(res['user_id'], {
-
-            "bday": res['bday'],
-            "firstName": res['firstName'],
-            "lastName": res['lastName'],
-            "city": res['city'],
-            "email": res['email'],
-            "sex": res['sex'],
-            "color": res['color'],
-            "about": res['about']
-
-        })
-
+        serv = ServiceProfile()
+        serv.update_profile_information(res)
         return {"status": True}
 
     except Exception as e:
 
         print('EDIT_PROFILE', e)
 
+        return {"status": False}
+
+
+@update_password_blueprint.route("/update/password/", methods=['POST'])  # user nick search
+def update_password():
+    try:
+        """Перенаправляем запрос в сервис нужному методу"""
+        res = request.get_json()
+        return {"status": ServiceProfile.set_new_password(res)}
+
+    except Exception as e:
+        print('EDIT_PROFILE', e)
         return {"status": False}
 
 
