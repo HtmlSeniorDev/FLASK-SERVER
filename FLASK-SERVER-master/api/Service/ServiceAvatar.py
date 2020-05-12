@@ -50,7 +50,8 @@ class ServiceAvatar:
                     set__avatarEndAt=avatar_end_at[0],
                     set__balace=balance_user,
                 )
-                emit('update_avatar', {'avatarLink': str(avatar_id)}, user=user_id, broadcast=True,
+                emit('update_avatar', {'avatarLink': SERVER_ADDRESS + "/attachments/avatar/" + str(avatar_id)},
+                     user=user_id, broadcast=True,
                      namespace='/chat')
                 return True
 

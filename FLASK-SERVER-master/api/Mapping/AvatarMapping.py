@@ -24,7 +24,7 @@ def buy_avatar():
     avatar_price = int((res['price']))
     user_id = str(res['user_id'])
     avatar_id = str(res['avatar_id'])
-    result = api_buy.buy_avatars(int(avatar_price) * 100, user_id, avatar_id)
+    result = api_buy.buy_avatars(int(avatar_price), user_id, avatar_id)
     return jsonify({"Accept": result})
 
 
@@ -36,7 +36,7 @@ def send_avatar():
     user_id = str(res['user_id'])
     avatar_id = str(res['avatar_id'])
     accepter_user_id = str(res['accepter_user_id'])
-    result = api_buy.send_avatars(int(avatar_price) * 100, user_id, avatar_id, accepter_user_id)
+    result = api_buy.send_avatars(int(avatar_price), user_id, avatar_id, accepter_user_id)
     return jsonify({"Accept": result})
 
 
