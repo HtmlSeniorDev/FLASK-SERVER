@@ -6,7 +6,7 @@ from api.Repository.WeddingDao import WeddingDao
 from datetime import datetime
 from .ServiceMessages import ServiceMessages
 from .ServicePushNotification import ServicePushNotification
-from ..Objects.Server_id import SERVER_ID
+from api.Objects.Server_id import SERVER_ID
 
 
 class ServiceZags:
@@ -42,10 +42,8 @@ class ServiceZags:
 
     def update_zags_request(self, user_request, user_from_request):
         try:
-            print()
 
             if self.check_exist_zags(user_request):
-
                 if user_request == user_from_request:
                     return False
 
@@ -54,19 +52,13 @@ class ServiceZags:
                 balance_user = int(serialize_user['balace'])
                 nick = 'Пользователь\t' + str(serialize_user['nic'])
                 price_zags = self.Settings.get_zags_price()
-
                 if balance_user < price_zags:
-
                     print('not enough money')
-
                     return False
-
                 else:
-
                     balance_user = balance_user - price_zags
                     object_change = {
                         "balace": int(balance_user),
-
                     }
 
                     object_change_zags = {"zagsRequest": [str(user_from_request)]}

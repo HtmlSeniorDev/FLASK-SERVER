@@ -1,4 +1,4 @@
-from flask import session, request, jsonify
+from flask import session, request
 from flask_socketio import emit, join_room
 from api.Repository.UsersDao import UsersDao
 from api.Service.ServiceRoomUser import ServiceRoomUser

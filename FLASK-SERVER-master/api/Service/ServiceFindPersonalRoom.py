@@ -1,9 +1,9 @@
-from ..Objects.Server_id import SERVER_ID
+from api.Objects.Server_id import SERVER_ID
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from ..Repository.PersonalRoomsDao import PersonalRoomsDao
-from ..Repository.UsersDao import UsersDao
-from ..Repository.MessagesDao import MessagesDao
+from api.Repository.PersonalRoomsDao import PersonalRoomsDao
+from api.Repository.UsersDao import UsersDao
+from api.Repository.MessagesDao import MessagesDao
 
 import json
 

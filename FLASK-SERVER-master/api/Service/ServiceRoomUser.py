@@ -13,7 +13,10 @@ class ServiceRoomUser:
     @staticmethod
     def insert_user_in_room(user, room):
         try:
-            UserInRoom(user=User(id=user), room=Room(id=room)).save()
+            try:
+                UserInRoom.objects.get(user=User(id=user))
+            except Exception as e:
+                UserInRoom(user=User(id=user), room=Room(id=room)).save()
         except Exception as e:
             print(e, 'ServiceRoomUser.insert_user_in_room')
 
@@ -22,6 +25,7 @@ class ServiceRoomUser:
     @staticmethod
     def delete_user_in_room(user, room):
         try:
-            UserInRoom.objects(user=ObjectId(user), room=ObjectId(room)).delete()
+            if UserInRoom.objects.get(user=User(id=user)) is not None:
+                UserInRoom.objects(user=ObjectId(user)).delete()
         except Exception as e:
             print(e, 'delete_user_in_room.insert_user_in_room')

@@ -4,12 +4,14 @@ from bson.json_util import dumps
 from db import mongo
 from flask import request, Blueprint, jsonify
 from ..Repository.UsersDao import UsersDao
-from ..Service.ServiceProfile import ServiceProfile
-update_password_blueprint = Blueprint('update_password_blueprint',__name__)
+from api.Service.ServiceProfile import ServiceProfile
+
+update_password_blueprint = Blueprint('update_password_blueprint', __name__)
 edit_profile_blueprint = Blueprint('edit_profile_blueprint', __name__, )
 add_profile_photo_blueprint = Blueprint('add_profile_photo_blueprint', __name__, )
 upload_photo_to_profile_blueprint = Blueprint('upload_photo_to_profile_blueprint', __name__, )
 delete_photo_to_profile_blueprint = Blueprint('delete_photo_to_profile_blueprint', __name__, )
+update_nickname_blueprint = Blueprint("update_nickname_blueprint", __name__)
 set_avatar_photo_to_profile_blueprint = Blueprint('set_avatar_photo_to_profile_blueprint', __name__, )
 Get_profile_photos_blueprint = Blueprint('Get_profile_photos_blueprint', __name__, )
 profile_blueprint = Blueprint('profile_blueprint', __name__, )
@@ -19,7 +21,8 @@ UserInfo = UsersDao()
 @profile_blueprint.route("/users/profile/<user_id>", methods=['GET'])  # user nick search
 def found_user_profile(user_id):
     try:
-        return jsonify(ServiceProfile.get_profile_information(user_id))
+        response = ServiceProfile.get_profile_information(user_id)
+        return jsonify(response)
     except Exception as e:
         print("profile_blueprint", e)
 
@@ -81,7 +84,19 @@ def update_password():
         return {"status": ServiceProfile.set_new_password(res)}
 
     except Exception as e:
-        print('EDIT_PROFILE', e)
+        print(e, "update_password-blueprint")
+        return {"status": False}
+
+
+@update_nickname_blueprint.route("/update/nickname/", methods=['POST'])  # user nick search
+def update_nickname():
+    try:
+        """Перенаправляем запрос в сервис нужному методу"""
+        res = request.get_json()
+        return {"status": ServiceProfile.set_new_nickname(res)}
+
+    except Exception as e:
+        print(e, "update_nickname-blueprint")
         return {"status": False}
 
 
@@ -110,7 +125,6 @@ def delete_photo_profile():
         res = request.get_json()
         photo_id = res['photo_id']
         Profile.del_photo(photo_id)
-
         return {"status": True}
 
     except Exception as e:

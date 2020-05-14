@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
-from .Service.ServicePushNotification import ServicePushNotification
-from .Service.ServiceCheckBanned import ServiceCheckBanned
+from api.Service.ServicePushNotification import ServicePushNotification
+from api.Service.ServiceCheckBanned import ServiceCheckBanned
 from db import mongo
 
 autharization_blueprint = Blueprint('autharization_blueprint', __name__, )

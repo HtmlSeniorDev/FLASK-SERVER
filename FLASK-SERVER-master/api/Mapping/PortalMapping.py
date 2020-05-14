@@ -1,6 +1,6 @@
 from flask import Blueprint,request
 from flask_socketio import emit
-from ..Service.ServiceWeddingView import ServiceWeddingView
+from api.Service.ServiceWeddingView import ServiceWeddingView
 
 WeddingList_blueprint = Blueprint('WeddingList_blueprint', __name__, )
 Run_line_blueprint = Blueprint('Run_line_blueprint', __name__)

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from ..Service.ServiceFindPersonalRoom import ServiceFindPersonalRooms
+from api.Service.ServiceFindPersonalRoom import ServiceFindPersonalRooms
 
 find_personalrooms_blueprint = Blueprint('find_personalrooms_blueprint', __name__, )
 

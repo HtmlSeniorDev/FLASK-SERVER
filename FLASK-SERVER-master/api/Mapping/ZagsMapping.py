@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from ..Service.ServicePushNotification import ServicePushNotification
-from ..Service.ServiceZags import ServiceZags
+from api.Service.ServicePushNotification import ServicePushNotification
+from api.Service.ServiceZags import ServiceZags
 
 Zags_Request_blueprint = Blueprint('Zags_Request_blueprint', __name__, )
 Zags_Request_Decline_blueprint = Blueprint('Zags_Request_Decline_blueprint', __name__, )

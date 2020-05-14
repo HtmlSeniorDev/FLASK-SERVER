@@ -4,12 +4,12 @@ from datetime import datetime
 from api.Repository.GiftsDao import GiftsDao
 from api.Repository.UsersDao import UsersDao
 from .ServiceMessages import ServiceMessages
-from ..Models.DbModel.GiftModel import Gift
-from ..Models.DbModel.UserGiftsModel import UserGiftsModel
-from ..Models.DbModel.UserModel import User
-from ..Objects.Server_id import SERVER_ADDRESS
+from api.Models.DbModel.GiftModel import Gift
+from api.Models.DbModel.UserGiftsModel import UserGiftsModel
+from api.Models.DbModel.UserModel import User
+from api.Objects.Server_id import SERVER_ADDRESS
 from bson.objectid import ObjectId
-from ..Models.DataModel.ListGiftsModel import ListGiftsModel
+from api.Models.DataModel.ListGiftsModel import ListGiftsModel
 from .ServiceValidation import ServiceValidation
 
 
@@ -57,7 +57,7 @@ class ServiceGifts:
 
                 """Снимаем баланс отправителя"""
                 User.objects(id=ObjectId(from_id)).update_one(
-                    set__balace=User(id=balance_user),
+                    set__balace=balance_user,
                 )
                 return True
 

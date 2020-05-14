@@ -6,10 +6,10 @@ from flask_socketio import emit
 
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
-from ..Models.DataModel.ListAvatarsModel import ListAvatarsModel
-from ..Models.DbModel.AvatarModel import Avatar
-from ..Models.DbModel.UserModel import User
-from ..Objects.Server_id import SERVER_ADDRESS
+from api.Models.DataModel.ListAvatarsModel import ListAvatarsModel
+from api.Models.DbModel.AvatarModel import Avatar
+from api.Models.DbModel.UserModel import User
+from api.Objects.Server_id import SERVER_ADDRESS
 from ..Service.ServiceValidation import ServiceValidation
 
 
@@ -50,7 +50,8 @@ class ServiceAvatar:
                     set__avatarEndAt=avatar_end_at[0],
                     set__balace=balance_user,
                 )
-                emit('update_avatar', {'avatarLink': SERVER_ADDRESS + "/attachments/avatar/" + str(avatar_id)},
+                emit('update_avatar',
+                     {'avatarLink': SERVER_ADDRESS + "/attachments/avatar/" + str(avatar_id), "user": user_id},
                      user=user_id, broadcast=True,
                      namespace='/chat')
                 return True

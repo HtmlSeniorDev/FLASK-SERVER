@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request, jsonify
-from ..Service.ServiceRooms import ServiceRooms
-from bson.json_util import dumps, loads
+from api.Service.ServiceRooms import ServiceRooms
+from bson.json_util import dumps
 from db import mongo
 from bson.objectid import ObjectId
 

@@ -4,7 +4,7 @@ from api.Repository.MessagesDao import MessagesDao
 from api.Repository.PersonalRoomsDao import PersonalRoomsDao
 import json
 from bson.json_util import dumps
-from ..Objects.Server_id import SERVER_ID
+from api.Objects.Server_id import SERVER_ID
 
 class ServiceMessages:
     Messages = MessagesDao()

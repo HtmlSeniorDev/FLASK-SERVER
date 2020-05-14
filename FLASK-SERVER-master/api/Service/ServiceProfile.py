@@ -1,16 +1,9 @@
-from flask import jsonify, session
 from flask_socketio import emit
-
-from api.Repository.UsersDao import UsersDao
-from api.Repository.PhotosDao import PhotosDao
 from dateutil.parser import parse
 from datetime import datetime
 from bson.objectid import ObjectId
-
-from main.events_chat import UserConnected
-from .ServiceValidation import ServiceValidation
-from ..Models.DbModel.Photo import Photo
-from ..Models.DbModel.UserModel import User
+from api.Models.DbModel.Photo import Photo
+from api.Models.DbModel.UserModel import User
 
 
 class ServiceProfile:
@@ -65,13 +58,11 @@ class ServiceProfile:
                 set__about=kwargs['about']
             )
             """Ищем юзера в списке подключенных и посылаем изменения в сокет"""
-            # sid = ServiceValidation.check_session_sid(kwargs['user_id'])  # поиск сида по юзер id
-            # if sid:
-            #  print(sid, 'sid')
-            room = session.get('room')
-            print(room)
-            emit('update_nic', {'color': int(kwargs['color'])},user=kwargs['user_id'],broadcast=True,
-                     namespace='/chat')
+
+            # todo меняет у всех цвет
+            emit('update_nic', {'color': int(kwargs['color']), "user": kwargs['user_id']}, user=kwargs['user_id'],
+                 broadcast=True,
+                 namespace='/chat')
             return True
         except Exception as e:
             print('ServiceProfile.update_profile_information', e)
@@ -101,7 +92,8 @@ class ServiceProfile:
                 set__nic=kwargs['nic'],
             )
             """Посылаем изменения в сокет"""
-            emit('update_nic', jsonify({'nic': kwargs['nic']}), broadcast=True, namespace='/chat')
+            # todo посылает всем
+            emit('update_nickname', {'nic': kwargs['nic']}, broadcast=True, namespace='/chat')
             return True
         except Exception as e:
             print('ServiceProfile.set_new_nickname', e)

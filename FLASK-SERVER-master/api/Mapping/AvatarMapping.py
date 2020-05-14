@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from ..Service.ServiceAvatar import ServiceAvatar
+from api.Service.ServiceAvatar import ServiceAvatar
 
 AvatarRequestClient_blueprint = Blueprint('AvatarRequestClient', __name__, )
 AvatarSend_blueprint = Blueprint('AvatarSend_blueprint', __name__, )

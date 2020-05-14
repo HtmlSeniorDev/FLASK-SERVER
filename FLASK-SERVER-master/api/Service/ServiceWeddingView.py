@@ -46,8 +46,8 @@ class ServiceWeddingView:
                 except Exception as e:
                     one_wedding['photo0'] = 'image_exist'
                     print(e)
-                try:
 
+                try:
                     photo1 = username1_data['photo']
                     one_wedding['photo1'] = SERVER_ADDRESS + '/photos/' + str(photo1)
                 except Exception as e:

@@ -8,8 +8,8 @@ from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
 from .ServiceSendMsg import ServiceSendMsg
 from api.Objects.Server_id import TYPE_INVISIBLE
 from .ServiceValidation import ServiceValidation
-from ..Models.DataModel.GetUserTypeModel import GetUserTypeModel
-from ..Models.DbModel.UserModel import User
+from api.Models.DataModel.GetUserTypeModel import GetUserTypeModel
+from api.Models.DbModel.UserModel import User
 
 
 class ServiceAdmin:

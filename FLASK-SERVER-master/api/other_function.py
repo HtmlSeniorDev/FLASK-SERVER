@@ -2,7 +2,6 @@ from flask import Blueprint
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from db import mongo
-from .Service.ServiceColor import ServiceColor
 from .Objects.Server_id import SERVER_ADDRESS
 
 other_function_blueprint = Blueprint('other_function_blueprint', __name__, )

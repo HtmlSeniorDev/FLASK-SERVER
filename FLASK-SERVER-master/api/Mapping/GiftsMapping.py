@@ -2,7 +2,7 @@ from bson.objectid import ObjectId
 from limiter import limiter
 from db import mongo
 from flask import Blueprint, request, jsonify
-from ..Service.ServiceGifts import ServiceGifts
+from api.Service.ServiceGifts import ServiceGifts
 from ..Objects.Server_id import SERVER_ADDRESS
 from bson.json_util import dumps
 import json
@@ -18,12 +18,11 @@ def gift_send():
     try:
         api_buy = ServiceGifts()
         res = request.get_json()
-        print(res)
         gift_price = int((res['price']))
         user_id = str(res['user_id'])
         gift_id = str(res['gift_id'])
         from_id = str(res['from_id'])
-        result = api_buy.send_gifts(int(gift_price) / 100, user_id, gift_id, from_id)
+        result = api_buy.send_gifts(int(gift_price), user_id, gift_id, from_id)
         return jsonify({"Accept": result})
     except Exception as e:
         print(e)
@@ -79,7 +78,9 @@ def found_user_gift(nic):
         gifts_id = complete_msg['_id']['$oid']
         search_description = mongo.db.gifts.find_one({'_id': ObjectId(str(gifts))})
         get_description = search_description['description']
+        get_name = search_description['name']
         arr_gifts_dict['description'] = str(get_description)
+        arr_gifts_dict['name'] = str(get_name)
         arr_gifts_dict['url'] = SERVER_ADDRESS + "/attachments/gift/" + str(gifts)
         arr_gifts_dict['id'] = str(gifts_id)
         arr_gifts.append(dict(arr_gifts_dict))
