@@ -19,28 +19,29 @@ def get_avatar_list():
 
 @AvatarRequestClient_blueprint.route("/Avatar/buy/", methods=['POST'], strict_slashes=False)  # user search objectid
 def buy_avatar():
-    api_buy = ServiceAvatar()
-    res = request.get_json()
-    avatar_price = int((res['price']))
-    user_id = str(res['user_id'])
-    avatar_id = str(res['avatar_id'])
-    result = api_buy.buy_avatars(int(avatar_price), user_id, avatar_id)
-    return jsonify({"Accept": result})
+    try:
+        api_buy = ServiceAvatar()
+        res = request.get_json()
+        avatar_price = int((res['price']))
+        user_id = str(res['user_id'])
+        avatar_id = str(res['avatar_id'])
+        result = api_buy.buy_avatars(int(avatar_price), user_id, avatar_id)
+        return jsonify({"Accept": result})
+    except Exception as e:
+        return jsonify({"Accept": False})
 
 
-@AvatarSend_blueprint.route("/Avatar/send/", methods=['POST'], strict_slashes=False)  # user search objectid
+@AvatarSend_blueprint.route("/avatar/send/", methods=['POST'], strict_slashes=False)  # user search objectid
 def send_avatar():
-    api_buy = ServiceAvatar()
-    res = request.get_json()
-    avatar_price = int((res['price']))
-    user_id = str(res['user_id'])
-    avatar_id = str(res['avatar_id'])
-    accepter_user_id = str(res['accepter_user_id'])
-    result = api_buy.send_avatars(int(avatar_price), user_id, avatar_id, accepter_user_id)
-    return jsonify({"Accept": result})
+    try:
+        res = request.get_json()
+        print(res)
+        return jsonify({"Accept": ServiceAvatar.send_user_avatar(res)})
+    except Exception as e:
+        return jsonify({"Accept": False})
 
 
-@AvatarAccept_blueprint.route("/Avatar/accept/", methods=['POST'], strict_slashes=False)  # user search objectid
+@AvatarAccept_blueprint.route("/avatar/accept/", methods=['POST'], strict_slashes=False)  # user search objectid
 def accept_avatar():
     api_buy = ServiceAvatar()
     res = request.get_json()

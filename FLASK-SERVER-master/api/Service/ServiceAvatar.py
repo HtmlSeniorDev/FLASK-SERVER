@@ -10,6 +10,7 @@ from api.Models.DataModel.ListAvatarsModel import ListAvatarsModel
 from api.Models.DbModel.AvatarModel import Avatar
 from api.Models.DbModel.UserModel import User
 from api.Objects.Server_id import SERVER_ADDRESS
+from ..Models.DbModel.SendAvatar import SendAvatar
 from ..Service.ServiceValidation import ServiceValidation
 
 
@@ -107,3 +108,36 @@ class ServiceAvatar:
         except Exception as e:
             print('ServiceAvatar_delete_avatar', e)
             pass
+
+    @staticmethod
+    def send_user_avatar(kwargs):
+        try:
+            avatar = Avatar.objects.get(id=ObjectId(kwargs['avatar']))
+            user = User.objects.get(id=ObjectId(kwargs['sender']))
+            if avatar.price < user.balace:
+                user.balace = user.balace - avatar.price
+                user.save()
+                SendAvatar(sender=user, user=kwargs['user'], avatar=kwargs['avatar']).save()
+                return True
+            return False
+
+        except Exception as e:
+            print('send_user_avatar', e)
+            pass
+
+    @staticmethod
+    def check_avatar_send(kwargs):
+        SendAvatar.objects.get(user=User(id=ObjectId(kwargs['user'])))
+
+    @staticmethod
+    def accept_user_avatar(kwargs):
+        try:
+            if kwargs['accept']:
+                User.objects(id=ObjectId(kwargs['user'])).update_one(
+                    set__avatarLink=(kwargs['avatar']),
+                    set__avatarEndAt=datetime.now())
+                return True
+            return False
+
+        except Exception as e:
+            print('accept_user_avatar', e)

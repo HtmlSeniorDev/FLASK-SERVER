@@ -77,7 +77,7 @@ class ServiceGifts:
                 """Создамем подарок """
                 gift = Gift(
                     creator=creator,
-                    price=int(gift_price) * 100,
+                    price=int(gift_price),
                     createdAt=time,
                     description=description,
                     name=name
@@ -101,7 +101,7 @@ class ServiceGifts:
                 Gift.objects(id=ObjectId(gift_id)).update_one(
                     set__creator=User(id=creator),
                     set__description=description,
-                    set__price=int(gift_price) * 100,
+                    set__price=int(gift_price),
                     set__createdAt=datetime.now(),
                     set__name=name
                 )
