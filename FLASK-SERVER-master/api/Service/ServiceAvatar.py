@@ -52,7 +52,7 @@ class ServiceAvatar:
                 )
                 emit('update_avatar',
                      {'avatarLink': SERVER_ADDRESS + "/attachments/avatar/" + str(avatar_id), "user": user_id},
-                     user=user_id, broadcast=True,
+                     broadcast=True,
                      namespace='/chat')
                 return True
 

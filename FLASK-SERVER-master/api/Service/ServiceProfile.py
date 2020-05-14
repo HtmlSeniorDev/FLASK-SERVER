@@ -73,7 +73,7 @@ class ServiceProfile:
         try:
             user = User.objects.get(id=ObjectId(kwargs['user_id']))
             if kwargs['old_password'] == user.password:
-                print('okaty')
+
                 User.objects(id=ObjectId(kwargs['user_id'])).update_one(
                     set__password=kwargs['password'],
                 )
@@ -93,7 +93,8 @@ class ServiceProfile:
             )
             """Посылаем изменения в сокет"""
             # todo посылает всем
-            emit('update_nickname', {'nic': kwargs['nic']}, broadcast=True, namespace='/chat')
+            emit('update_nickname', {'nic': kwargs['nic'], "user": kwargs['user_id']}, broadcast=True,
+                 namespace='/chat')
             return True
         except Exception as e:
             print('ServiceProfile.set_new_nickname', e)
