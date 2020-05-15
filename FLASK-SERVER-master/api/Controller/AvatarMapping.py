@@ -36,20 +36,20 @@ def buy_avatar():
 def send_avatar():
     try:
         req = request.get_json()
-        return jsonify({"Accept": ServiceAvatar.send_user_avatar(req)})
+        return jsonify({"status": ServiceAvatar.send_user_avatar(req)})
     except Exception as e:
         print(e, 'AVATAR_SEND_ERROR')
-        return jsonify({"Accept": False})
+        return jsonify({"status": False})
 
 
 @AvatarAccept_blueprint.route("/avatar/accept/", methods=['POST'], strict_slashes=False)  # user search objectid
 def accept_avatar():
     try:
         res = request.get_json()
-        return jsonify({"Accept": ServiceAvatar.accept_user_avatar(res)})
+        return jsonify({"status": ServiceAvatar.accept_user_avatar(res)})
     except Exception as e:
         print(e, 'AVATAR_SEND_ERROR')
-        return jsonify({"Accept": False})
+        return jsonify({"status": False})
 
 
 @Avatar_Checked_blueprint.route("/avatar/check/<user>", methods=["GET"])

@@ -20,9 +20,8 @@ class Avatar(Document):
         data = dict({
             'image': SERVER_ADDRESS + "/attachments/avatar/" + str(self.id),
             'name': self.name,
-            "id":str(self.id),
+            "id": str(self.id),
 
         })
 
         return data
-

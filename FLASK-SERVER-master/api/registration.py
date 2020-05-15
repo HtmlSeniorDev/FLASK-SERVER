@@ -13,8 +13,9 @@ def registration(login: str, password: str, nick: str, colornick: int) -> jsonif
     try:
         timereg = datetime.now()
         User(login=login, password=password, nic=nick, sex=int(0),
-             color=int(colornick), type=int(1), registrationDate=timereg, bday=timereg, balace=int(50), vic=int(0),friends=[],
-             regDeviceId=str("0"), lastVisit=datetime.now()).save()
+             color=int(colornick), type=int(1), registrationDate=timereg, bday=timereg, balace=int(50), vic=int(0),
+             friends=[], zagsRequest=[], regDeviceId=str("0"), lastVisit=datetime.now()).save()
+
         return jsonify({'reg': True})
     except Exception as e:
         print(e)

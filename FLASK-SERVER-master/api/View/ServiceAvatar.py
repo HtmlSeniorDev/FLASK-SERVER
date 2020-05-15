@@ -117,7 +117,8 @@ class ServiceAvatar:
                 user.save()
                 SendAvatar(sender=user, user=kwargs['user'], avatar=kwargs['avatar']).save()
                 return True
-            return False
+            else:
+                return False
 
         except Exception as e:
             print('send_user_avatar', e)
@@ -131,12 +132,14 @@ class ServiceAvatar:
     @staticmethod
     def accept_user_avatar(kwargs):
         try:
-            if kwargs['accept']:
+            if kwargs['consent']:
                 User.objects(id=ObjectId(kwargs['user'])).update_one(
                     set__avatarLink=(kwargs['avatar']),
                     set__avatarEndAt=datetime.now())
                 return True
-            return False
+
+            else:
+             return False
 
         except Exception as e:
             print('accept_user_avatar', e)

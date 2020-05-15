@@ -22,7 +22,8 @@ from api.Controller.PersonalRoomsMapping import find_personalrooms_blueprint
 from api.Controller.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint, \
     get_attachments_photos_profile_blueprint
 
-from api.Controller.PortalMapping import WeddingList_blueprint, Run_line_blueprint, Friends_list_blueprint
+from api.Controller.PortalMapping import WeddingList_blueprint, Run_line_blueprint, Friends_invite_blueprint, \
+    Friends_list_blueprint, Friends_accsess_blueprint, Friends_request_list_blueprint
 
 from api.Controller.AdminMapping import AdminList_blueprint, moderator_list_blueprint, \
     invisible_list_blueprint, \
@@ -47,8 +48,11 @@ from init import socketio
 getdefaultencoding()
 
 app = create_app()
-
+app.register_blueprint(Friends_request_list_blueprint)
 app.register_blueprint(Friends_list_blueprint)
+app.register_blueprint(Friends_accsess_blueprint)
+app.register_blueprint(Friends_list_blueprint)
+app.register_blueprint(Friends_invite_blueprint)
 app.register_blueprint(Avatar_Checked_blueprint)
 app.register_blueprint(update_nickname_blueprint)
 app.register_blueprint(update_password_blueprint)

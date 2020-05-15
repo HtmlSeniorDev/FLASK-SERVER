@@ -53,7 +53,7 @@ class User(Document):
             "sex": self.GENDER_CHOICE[self.sex],
             # "type": self.type,
             # "registrationDate": self.sex,
-            # "balace": self.balace,
+            "balace": self.balace,
             # "vic": self.vic,
             # "regDeviceId": self.regDeviceId,
             "photo": self.photo,
