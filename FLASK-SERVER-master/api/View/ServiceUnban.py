@@ -1,6 +1,6 @@
 from bson.json_util import dumps
 import json
-from api.Service.ServiceMessages import ServiceMessages
+from api.View.ServiceMessages import ServiceMessages
 from api.Repository.BannedUserDao import BannedUser
 from api.Repository.UsersDao import UsersDao
 
@@ -16,13 +16,9 @@ class ServiceUnban:
             serialize_user = json.loads(response_admin)
             user_type = serialize_user['type']
             if user_type == 4 or user_type == 2:
-
                 object_change = {
-
                     "type": int(1)
-
                 }
-
                 self.User.change_information_user(id_user, object_change)
                 self.Unban.ban_delete(str(id_document))
                 self.Log_Message.logging_sender(id_user, id_banner, name_admin)

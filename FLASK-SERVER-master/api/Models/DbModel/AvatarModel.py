@@ -1,6 +1,8 @@
 from mongoengine import Document, FileField, ReferenceField, CASCADE
 from mongoengine import IntField, StringField, DateTimeField
+
 from api.Models.DbModel.UserModel import User
+from api.utils.Server_id import SERVER_ADDRESS
 
 
 class Avatar(Document):
@@ -13,3 +15,14 @@ class Avatar(Document):
 
     def __str__(self) -> str:
         return 'New dBAvatar: ' + self.name
+
+    def serialize_avatar_information(self):
+        data = dict({
+            'image': SERVER_ADDRESS + "/attachments/avatar/" + str(self.id),
+            'name': self.name,
+            "id":str(self.id),
+
+        })
+
+        return data
+

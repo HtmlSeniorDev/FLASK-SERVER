@@ -1,9 +1,9 @@
 from bson.json_util import dumps
 import json
-from api.Service.ServiceMessages import ServiceMessages
+from api.View.ServiceMessages import ServiceMessages
 from api.Repository.BannedUserDao import BannedUser
 from api.Repository.UsersDao import UsersDao
-from api.Objects.Server_id import TYPE_BANNED, TYPE_ADMIN, TYPE_MODERATOR
+from api.utils.Server_id import TYPE_BANNED, TYPE_ADMIN, TYPE_MODERATOR
 
 
 class ServiceCheckBanned:

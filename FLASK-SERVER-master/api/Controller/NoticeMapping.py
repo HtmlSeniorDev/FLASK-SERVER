@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from api.Service.ServiceNotice import ServiceNotice
+from api.View.ServiceNotice import ServiceNotice
 from limiter import limiter
 
 ShowNotice_blueprint = Blueprint('ShowNotice_blueprint', __name__, )

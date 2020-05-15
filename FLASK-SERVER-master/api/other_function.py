@@ -2,7 +2,7 @@ from flask import Blueprint
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from db import mongo
-from .Objects.Server_id import SERVER_ADDRESS
+from api.utils.Server_id import SERVER_ADDRESS
 
 other_function_blueprint = Blueprint('other_function_blueprint', __name__, )
 

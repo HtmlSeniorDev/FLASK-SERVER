@@ -6,7 +6,7 @@ from api.Repository.WeddingDao import WeddingDao
 from datetime import datetime
 from .ServiceMessages import ServiceMessages
 from .ServicePushNotification import ServicePushNotification
-from api.Objects.Server_id import SERVER_ID
+from api.utils.Server_id import SERVER_ID
 
 
 class ServiceZags:

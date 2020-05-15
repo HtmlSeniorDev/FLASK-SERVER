@@ -1,16 +1,40 @@
+from bson import ObjectId
 from bson.json_util import dumps
 import json
 
 from flask import jsonify
 
+from api.Models.DbModel.UserModel import User
 from api.Repository.UsersDao import UsersDao
 from api.Repository.WeddingDao import WeddingDao
-from api.Objects.Server_id import SERVER_ADDRESS
+from api.utils.Server_id import SERVER_ADDRESS
 
 
-class ServiceWeddingView:
+class ServiceChatPortal:
+    request_friends = []
+    friends_list = []
     User = UsersDao()
     Wedding = WeddingDao()
+
+    """Отправляем заявку в друзья"""
+    #todo доделать
+    def invite_friends(self,data):
+        user = User.objects.get(id=ObjectId(data["user"]))  # user which accepted or no
+        friend = User.objects.get(id=ObjectId(data["friend"]))  # self id(sender)
+        self.request_friends = friend.friendsRequest
+        self.request_friends.append(str(friend.id))
+        user.save()
+
+    def friend_request_list(self, data):
+        user = User.objects.get(id=ObjectId(data["user"]))  # self id
+        self.request_friends = map(lambda user: user.serialize_user_in_room(), user.friendsRequest)
+
+    """Согласие/Отказ от дружбы"""
+    def access_friends(self, data):
+        pass
+
+    def friends_list(self, data):
+        pass
 
     def get_weddings_list(self):
         try:

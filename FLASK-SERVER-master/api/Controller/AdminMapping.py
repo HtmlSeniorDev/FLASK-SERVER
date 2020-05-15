@@ -3,10 +3,10 @@ from db import mongo
 from bson.json_util import dumps, loads
 from bson.objectid import ObjectId
 from flask import Blueprint, request, jsonify
-from api.Service.ServiceAdmin import ServiceAdmin
-from api.Service.ServiceUnban import ServiceUnban
-from api.Service.ServiceAvatar import ServiceAvatar
-from api.Service.ServiceGifts import ServiceGifts
+from api.View.ServiceAdmin import ServiceAdmin
+from api.View.ServiceUnban import ServiceUnban
+from api.View.ServiceAvatar import ServiceAvatar
+from api.View.ServiceGifts import ServiceGifts
 
 AdminList_blueprint = Blueprint('AdminList_blueprint', __name__, )
 moderator_list_blueprint = Blueprint('moderator_list_blueprint', __name__, )

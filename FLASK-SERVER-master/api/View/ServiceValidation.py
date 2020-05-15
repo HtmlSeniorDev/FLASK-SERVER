@@ -2,7 +2,7 @@ from bson.json_util import dumps
 import json
 from api.Repository.UsersDao import UsersDao
 from main.events_chat import UserConnected
-from api.Objects.Server_id import TYPE_ADMIN, TYPE_MODERATOR
+from api.utils.Server_id import TYPE_ADMIN, TYPE_MODERATOR
 
 
 class ServiceValidation:

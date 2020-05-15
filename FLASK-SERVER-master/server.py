@@ -1,10 +1,10 @@
 from api.registration import registration_blueprint
 from api.autharization import autharization_blueprint
 
-from api.Mapping.GiftsMapping import delete_gifts_blueprint, GiftsListBuy_blueprint, GiftRequestClient_blueprint, \
+from api.Controller.GiftsMapping import delete_gifts_blueprint, GiftsListBuy_blueprint, GiftRequestClient_blueprint, \
     gifts_blueprint
 
-from api.Mapping.ProfileMapping import edit_profile_blueprint, profile_blueprint, add_profile_photo_blueprint, \
+from api.Controller.ProfileMapping import edit_profile_blueprint, profile_blueprint, add_profile_photo_blueprint, \
     upload_photo_to_profile_blueprint, delete_photo_to_profile_blueprint, set_avatar_photo_to_profile_blueprint, \
     Get_profile_photos_blueprint, update_password_blueprint, update_nickname_blueprint
 
@@ -12,31 +12,31 @@ from api.other_function import other_function_blueprint
 from init import create_app
 from sys import getdefaultencoding
 
-from api.Mapping.AvatarMapping import AvatarRequestClient_blueprint, AvatarSend_blueprint, AvatarAccept_blueprint, \
-    AvatarList_blueprint
-from api.Mapping.ZagsMapping import Zags_Request_Decline_blueprint, Zags_Request_blueprint, Zags_Accept_blueprint, \
+from api.Controller.AvatarMapping import AvatarRequestClient_blueprint, AvatarSend_blueprint, AvatarAccept_blueprint, \
+    AvatarList_blueprint, Avatar_Checked_blueprint
+from api.Controller.ZagsMapping import Zags_Request_Decline_blueprint, Zags_Request_blueprint, Zags_Accept_blueprint, \
     Zags_Delete_blueprint
 
-from api.Mapping.PersonalRoomsMapping import find_personalrooms_blueprint
+from api.Controller.PersonalRoomsMapping import find_personalrooms_blueprint
 
-from api.Mapping.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint, \
+from api.Controller.AttachmentsMapping import get_attachments_gift_blueprint, get_attachments_avatar_blueprint, \
     get_attachments_photos_profile_blueprint
 
-from api.Mapping.PortalMapping import WeddingList_blueprint, Run_line_blueprint
+from api.Controller.PortalMapping import WeddingList_blueprint, Run_line_blueprint, Friends_list_blueprint
 
-from api.Mapping.AdminMapping import AdminList_blueprint, moderator_list_blueprint, \
+from api.Controller.AdminMapping import AdminList_blueprint, moderator_list_blueprint, \
     invisible_list_blueprint, \
     Unban_Actions_blueprint, add_avatar_admin_blueprint, update_avatar_admin_blueprint, \
     delete_avatar_admin_blueprint, add_gift_admin_blueprint, upload_gift_admin_blueprint, update_gift_admin_blueprint, \
     delete_gift_admin_blueprint
 
-from api.Mapping.RoomsMapping import GetRooms_blueprint, users_room_blueprint, last_room_blueprint, \
+from api.Controller.RoomsMapping import GetRooms_blueprint, users_room_blueprint, last_room_blueprint, \
     delete_personalrooms_blueprint, create_private_blueprint, Update_Category_blueprint, Delete_Category_blueprint, \
     Create_Room_blueprint, Create_Category_blueprint, users_list_view_blueprint
 
-from api.Mapping.NoticeMapping import ShowNotice_blueprint
+from api.Controller.NoticeMapping import ShowNotice_blueprint
 
-from api.Mapping.AudioMapping import add_audio_blueprint
+from api.Controller.AudioMapping import add_audio_blueprint
 
 from SERVER_CONFIG import SERVER_ADDRESS, SERVER_PORT
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -48,6 +48,8 @@ getdefaultencoding()
 
 app = create_app()
 
+app.register_blueprint(Friends_list_blueprint)
+app.register_blueprint(Avatar_Checked_blueprint)
 app.register_blueprint(update_nickname_blueprint)
 app.register_blueprint(update_password_blueprint)
 app.register_blueprint(Run_line_blueprint)

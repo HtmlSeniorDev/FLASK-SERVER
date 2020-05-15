@@ -1,4 +1,4 @@
-from mongoengine import Document
+from mongoengine import Document, BooleanField
 from mongoengine import IntField, StringField, DateTimeField, ListField
 
 
@@ -26,6 +26,9 @@ class User(Document):
     avatarEndAt = DateTimeField()
     zags = StringField()
     zagsRequest = ListField()
+    friends = ListField()
+    online = BooleanField()
+    friendsRequest = ListField()
     meta = {'collection': 'users'}
 
     def __str__(self) -> str:
@@ -36,6 +39,7 @@ class User(Document):
             'id': str(self.id),
             'color': self.color,
             'nic': self.nic,
+            "online": self.online
         }
 
     def serialize_profile_information(self):
@@ -47,11 +51,11 @@ class User(Document):
             "lastName": self.lastName,
             "email": self.email,
             "sex": self.GENDER_CHOICE[self.sex],
-            "type": self.type,
-            "registrationDate": self.sex,
-            "balace": self.balace,
-            "vic": self.vic,
-            "regDeviceId": self.regDeviceId,
+            # "type": self.type,
+            # "registrationDate": self.sex,
+            # "balace": self.balace,
+            # "vic": self.vic,
+            # "regDeviceId": self.regDeviceId,
             "photo": self.photo,
             "zags": self.zags,
             "zagsRequest": self.zagsRequest,

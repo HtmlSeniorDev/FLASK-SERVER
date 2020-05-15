@@ -6,7 +6,7 @@ from api.Repository.UsersDao import UsersDao
 from .ServiceColor import ServiceColor
 from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
 from .ServiceSendMsg import ServiceSendMsg
-from api.Objects.Server_id import TYPE_INVISIBLE
+from api.utils.Server_id import TYPE_INVISIBLE
 from .ServiceValidation import ServiceValidation
 from api.Models.DataModel.GetUserTypeModel import GetUserTypeModel
 from api.Models.DbModel.UserModel import User

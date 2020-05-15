@@ -2,8 +2,8 @@ from bson.objectid import ObjectId
 from limiter import limiter
 from db import mongo
 from flask import Blueprint, request, jsonify
-from api.Service.ServiceGifts import ServiceGifts
-from ..Objects.Server_id import SERVER_ADDRESS
+from api.View.ServiceGifts import ServiceGifts
+from api.utils.Server_id import SERVER_ADDRESS
 from bson.json_util import dumps
 import json
 

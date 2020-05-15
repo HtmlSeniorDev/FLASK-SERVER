@@ -7,7 +7,7 @@ from .ServiceMessages import ServiceMessages
 from api.Models.DbModel.GiftModel import Gift
 from api.Models.DbModel.UserGiftsModel import UserGiftsModel
 from api.Models.DbModel.UserModel import User
-from api.Objects.Server_id import SERVER_ADDRESS
+from api.utils.Server_id import SERVER_ADDRESS
 from bson.objectid import ObjectId
 from api.Models.DataModel.ListGiftsModel import ListGiftsModel
 from .ServiceValidation import ServiceValidation

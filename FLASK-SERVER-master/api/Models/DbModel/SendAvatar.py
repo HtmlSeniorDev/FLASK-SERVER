@@ -11,4 +11,14 @@ class SendAvatar(Document):
     meta = {'collection': 'UserAvatarRequest'}
 
     def __str__(self) -> str:
-        return 'New send Avatar: ' + self.sender
+        return 'New send Avatar: '
+
+    def serialize_sendlist(self):
+        data = ([dict({
+            'sender': self.sender.serialize_user_in_room(),
+            'user':  self.user.serialize_user_in_room(),
+            'avatar': self.avatar.serialize_avatar_information(),
+
+        })])
+
+        return data

@@ -3,15 +3,14 @@ from datetime import datetime, timedelta
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from flask_socketio import emit
-
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
 from api.Models.DataModel.ListAvatarsModel import ListAvatarsModel
 from api.Models.DbModel.AvatarModel import Avatar
 from api.Models.DbModel.UserModel import User
-from api.Objects.Server_id import SERVER_ADDRESS
+from api.utils.Server_id import SERVER_ADDRESS
 from ..Models.DbModel.SendAvatar import SendAvatar
-from ..Service.ServiceValidation import ServiceValidation
+from ..View.ServiceValidation import ServiceValidation
 
 
 class ServiceAvatar:
@@ -40,7 +39,6 @@ class ServiceAvatar:
             validation = self.Validator.checked_balance(user_id, avatar_price)
             if not validation:
                 """Если у отправителя не хватает баланса """
-
                 return False
             else:
 
@@ -126,8 +124,9 @@ class ServiceAvatar:
             pass
 
     @staticmethod
-    def check_avatar_send(kwargs):
-        SendAvatar.objects.get(user=User(id=ObjectId(kwargs['user'])))
+    def check_avatar_send(user_id):
+        avatar_information = SendAvatar.objects(user=ObjectId(user_id)).first()
+        return avatar_information.serialize_sendlist()
 
     @staticmethod
     def accept_user_avatar(kwargs):

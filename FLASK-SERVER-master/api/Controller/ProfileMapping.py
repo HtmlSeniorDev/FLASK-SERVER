@@ -4,7 +4,7 @@ from bson.json_util import dumps
 from db import mongo
 from flask import request, Blueprint, jsonify
 from ..Repository.UsersDao import UsersDao
-from api.Service.ServiceProfile import ServiceProfile
+from api.View.ServiceProfile import ServiceProfile
 
 update_password_blueprint = Blueprint('update_password_blueprint', __name__)
 edit_profile_blueprint = Blueprint('edit_profile_blueprint', __name__, )

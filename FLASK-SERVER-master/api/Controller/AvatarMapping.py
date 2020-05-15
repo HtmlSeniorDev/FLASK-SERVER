@@ -1,10 +1,11 @@
 from flask import Blueprint, request, jsonify
-from api.Service.ServiceAvatar import ServiceAvatar
+from api.View.ServiceAvatar import ServiceAvatar
 
 AvatarRequestClient_blueprint = Blueprint('AvatarRequestClient', __name__, )
 AvatarSend_blueprint = Blueprint('AvatarSend_blueprint', __name__, )
 AvatarAccept_blueprint = Blueprint('AvatarAccept_blueprint', __name__, )
 AvatarList_blueprint = Blueprint('AvatarList_blueprint', __name__, )
+Avatar_Checked_blueprint = Blueprint("Avatar_Checked_blueprint", __name__)
 
 
 @AvatarList_blueprint.route("/get/AvatarList", methods=['GET'])  # user nick search
@@ -34,17 +35,27 @@ def buy_avatar():
 @AvatarSend_blueprint.route("/avatar/send/", methods=['POST'], strict_slashes=False)  # user search objectid
 def send_avatar():
     try:
-        res = request.get_json()
-        print(res)
-        return jsonify({"Accept": ServiceAvatar.send_user_avatar(res)})
+        req = request.get_json()
+        return jsonify({"Accept": ServiceAvatar.send_user_avatar(req)})
     except Exception as e:
+        print(e, 'AVATAR_SEND_ERROR')
         return jsonify({"Accept": False})
 
 
 @AvatarAccept_blueprint.route("/avatar/accept/", methods=['POST'], strict_slashes=False)  # user search objectid
 def accept_avatar():
-    api_buy = ServiceAvatar()
-    res = request.get_json()
-    accepter_user_id = str(res['accepter_user_id'])
-    result = api_buy.accept_avatar_send(accepter_user_id)
-    return jsonify({"Accept": result})
+    try:
+        res = request.get_json()
+        return jsonify({"Accept": ServiceAvatar.accept_user_avatar(res)})
+    except Exception as e:
+        print(e, 'AVATAR_SEND_ERROR')
+        return jsonify({"Accept": False})
+
+
+@Avatar_Checked_blueprint.route("/avatar/check/<user>", methods=["GET"])
+def checking_avatar(user):
+    try:
+        response = ServiceAvatar.check_avatar_send(user)
+        return jsonify(response)
+    except Exception as e:
+        pass

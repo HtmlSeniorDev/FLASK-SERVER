@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from api.Service.ServiceAudio import ServiceAudio
+from api.View.ServiceAudio import ServiceAudio
 import time
 from db import mongo
 from bson.json_util import dumps

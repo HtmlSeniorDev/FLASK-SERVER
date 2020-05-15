@@ -1,15 +1,16 @@
-from flask import Blueprint,request
+from flask import Blueprint, request
 from flask_socketio import emit
-from api.Service.ServiceWeddingView import ServiceWeddingView
+from api.View.ServiceChatPortal import ServiceChatPortal
 
 WeddingList_blueprint = Blueprint('WeddingList_blueprint', __name__, )
 Run_line_blueprint = Blueprint('Run_line_blueprint', __name__)
+Friends_list_blueprint = Blueprint("Friends_list_blueprint", __name__)
 
 
 @WeddingList_blueprint.route("/get/WeddingList", methods=['GET'])  # user nick search
 def get_weddings_list():
     try:
-        api_wedding_list = ServiceWeddingView()
+        api_wedding_list = ServiceChatPortal()
         return api_wedding_list.get_weddings_list()
 
     except Exception as e:
@@ -23,3 +24,11 @@ def run_line():
     message = res['message']
     emit('run_text', message, broadcast=True, namespace='/chat')
     return 'line start'
+
+
+@Friends_list_blueprint.route("/friend", methods=['POST'], strict_slashes=False)
+def invite_friend():
+    res = request.get_json()
+    a = ServiceChatPortal()
+    a.invite_friends(res)
+    return 'true'

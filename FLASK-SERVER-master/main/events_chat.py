@@ -1,7 +1,7 @@
 from flask import session, request
 from flask_socketio import emit, join_room
 from api.Repository.UsersDao import UsersDao
-from api.Service.ServiceRoomUser import ServiceRoomUser
+from api.View.ServiceRoomUser import ServiceRoomUser
 from init import socketio
 from limiter import limiter
 from .Model_Message import MODEL_MESSAGE
