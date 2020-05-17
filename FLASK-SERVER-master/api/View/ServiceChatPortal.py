@@ -43,7 +43,8 @@ class ServiceChatPortal:
     """Согласие/Отказ от дружбы"""
 
     def access_friends(self, data):
-        user = User.objects.get(id=ObjectId(data["user"]))  # ищем список заявок
+        user = User.objects.get(id=ObjectId(data["user"]))
+        friend = User.objects.get(id=ObjectId(data["friend"]))# ищем список заявок
         """Если пользователь дал согласие на дружбу"""
         try:
             if data["consent"]:  # true/false
@@ -53,6 +54,7 @@ class ServiceChatPortal:
                 self.friends_list = user.friends
                 self.friends_list.append(ObjectId(data['friend']))  # добавляем его в список друзей
                 user.friends = self.friends_list
+                friend.friends.append(data["user"])
                 user.save()
                 return True
             else:
@@ -74,12 +76,20 @@ class ServiceChatPortal:
 
     @staticmethod
     def delete_friend(data):
-        user = User.objects.get(id=ObjectId(data["user"]))  # ищем список заявок
+        user = User.objects.get(id=ObjectId(data["user"]))
+        friend = User.objects.get(id=ObjectId(data["friend"]))# ищем список заявок
         """delete_friend"""
         try:
             user.friends.remove(
                 ObjectId(
-                    data['friend']))  # если пользователь согласен дружить удаляем его из списка запросов на дружбу
+                    data['friend']))
+            friend.friends.remove(
+                ObjectId(
+                    data['user']))
+            user.save()
+            friend.save()
+
+            # если пользователь согласен дружить удаляем его из списка запросов на дружбу
             return True
 
         except Exception as e:

@@ -65,8 +65,9 @@ def get_friends_list(user_id):
 
 
 @Friends_delete_blueprint.route("/friend", methods=["DELETE"])
-def friend_delete(data):
+def friend_delete():
     try:
-        return jsonify(ServiceChatPortal.delete_friend(data))
+        res = request.get_json()
+        return jsonify(ServiceChatPortal.delete_friend(res))
     except Exception as e:
         return ("user not found", 400)
