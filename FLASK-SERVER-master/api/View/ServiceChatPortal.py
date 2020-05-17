@@ -56,6 +56,7 @@ class ServiceChatPortal:
                 user.friends = self.friends_list
                 friend.friends.append(data["user"])
                 user.save()
+                friend.save()
                 return True
             else:
                 user.friendsRequest.remove(
