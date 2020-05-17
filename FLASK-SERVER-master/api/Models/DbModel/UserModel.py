@@ -1,6 +1,8 @@
 from mongoengine import Document, BooleanField
 from mongoengine import IntField, StringField, DateTimeField, ListField
 
+from api.utils.Server_id import SERVER_ADDRESS
+
 
 class User(Document):
     GENDER_CHOICE = {0: 'не определен', 1: 'мужской', 2: 'женский'}
@@ -38,6 +40,7 @@ class User(Document):
         return {
             'id': str(self.id),
             'color': self.color,
+            "photo": self.photo,
             'nic': self.nic,
             "online": self.online
         }

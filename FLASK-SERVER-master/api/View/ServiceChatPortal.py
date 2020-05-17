@@ -43,18 +43,25 @@ class ServiceChatPortal:
     """Согласие/Отказ от дружбы"""
 
     def access_friends(self, data):
-
+        user = User.objects.get(id=ObjectId(data["user"]))  # ищем список заявок
         """Если пользователь дал согласие на дружбу"""
-        if data["consent"]:  # true/false
-            user = User.objects.get(id=ObjectId(data["user"]))  # ищем список заявок
-            user.friendsRequest.remove(
-                ObjectId(data['friend']))  # если пользователь согласен дружить удаляем его из списка запросов на дружбу
-            self.friends_list = user.friends
-            self.friends_list.append(ObjectId(data['friend']))  # добавляем его в список друзей
-            user.friends = self.friends_list
-            user.save()
-            return True
-        else:
+        try:
+            if data["consent"]:  # true/false
+                user.friendsRequest.remove(
+                    ObjectId(
+                        data['friend']))  # если пользователь согласен дружить удаляем его из списка запросов на дружбу
+                self.friends_list = user.friends
+                self.friends_list.append(ObjectId(data['friend']))  # добавляем его в список друзей
+                user.friends = self.friends_list
+                user.save()
+                return True
+            else:
+                user.friendsRequest.remove(
+                    ObjectId(data['friend']))
+                user.save()
+                return True
+        except Exception as e:
+            print(e, "access friend")
             return False
 
     @staticmethod
@@ -64,6 +71,20 @@ class ServiceChatPortal:
         for user in user.friends:
             friends_list.append(User.objects.get(id=user).serialize_user_in_room())
         return friends_list
+
+    @staticmethod
+    def delete_friend(data):
+        user = User.objects.get(id=ObjectId(data["user"]))  # ищем список заявок
+        """delete_friend"""
+        try:
+            user.friends.remove(
+                ObjectId(
+                    data['friend']))  # если пользователь согласен дружить удаляем его из списка запросов на дружбу
+            return True
+
+        except Exception as e:
+            print(e, "delete_friend")
+            return False
 
     def get_weddings_list(self):
         try:

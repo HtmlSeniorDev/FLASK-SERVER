@@ -8,6 +8,7 @@ Friends_invite_blueprint = Blueprint("Friends_invite_blueprint", __name__)
 Friends_list_blueprint = Blueprint("Friends_list_blueprint", __name__)
 Friends_request_list_blueprint = Blueprint("Friends_request_list_blueprint", __name__)
 Friends_accsess_blueprint = Blueprint("Friends_accsess_blueprint", __name__)
+Friends_delete_blueprint = Blueprint("Friends_delete_blueprint", __name__)
 
 
 @WeddingList_blueprint.route("/get/WeddingList", methods=['GET'])  # user nick search
@@ -59,5 +60,13 @@ def request_accsess_friend():
 def get_friends_list(user_id):
     try:
         return jsonify(ServiceChatPortal.get_friends_list(user_id))
+    except Exception as e:
+        return ("user not found", 400)
+
+
+@Friends_delete_blueprint.route("/friend", methods=["DELETE"])
+def friend_delete(data):
+    try:
+        return jsonify(ServiceChatPortal.delete_friend(data))
     except Exception as e:
         return ("user not found", 400)

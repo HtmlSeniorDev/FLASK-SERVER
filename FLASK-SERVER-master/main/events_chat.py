@@ -104,7 +104,7 @@ def joined(msg):
     msg['message'] = ENTRY_TEXT
     join_room(room)
     emit('status', msg, room=room)
-    emit('last_message', get_last_message()[0:20], broadcast=False, user=session['user'])
+    emit('last_message', get_last_message(), broadcast=False, user=session['user'])
     insert_or_delete_user_room_to_db('connected', session['user'], room)
     write_socket_con(request.sid, session['user'], room, msg['nic'])
 

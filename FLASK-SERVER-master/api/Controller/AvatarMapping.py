@@ -46,7 +46,8 @@ def send_avatar():
 def accept_avatar():
     try:
         res = request.get_json()
-        return jsonify({"status": ServiceAvatar.accept_user_avatar(res)})
+        service = ServiceAvatar()
+        return jsonify({"status": service.accept_user_avatar(res)})
     except Exception as e:
         print(e, 'AVATAR_SEND_ERROR')
         return jsonify({"status": False})

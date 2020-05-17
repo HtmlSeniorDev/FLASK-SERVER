@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+from flask import jsonify
 from flask_socketio import emit
 from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
@@ -18,6 +19,12 @@ class ServiceAvatar:
     User = UsersDao()
     Validator = ServiceValidation()
     avatar_url = SERVER_ADDRESS + "/attachments/avatar/"
+
+    def send_socket_avatar(self, avatar_id, user_id):
+        emit('update_avatar',
+             {'avatarLink': SERVER_ADDRESS + "/attachments/avatar/" + str(avatar_id), "user": user_id},
+             broadcast=True,
+             namespace='/chat')
 
     def combine_avatar_list(self):
         try:
@@ -49,10 +56,8 @@ class ServiceAvatar:
                     set__avatarEndAt=avatar_end_at[0],
                     set__balace=balance_user,
                 )
-                emit('update_avatar',
-                     {'avatarLink': SERVER_ADDRESS + "/attachments/avatar/" + str(avatar_id), "user": user_id},
-                     broadcast=True,
-                     namespace='/chat')
+                self.send_socket_avatar(avatar_id, user_id)
+
                 return True
 
         except Exception as e:
@@ -127,19 +132,28 @@ class ServiceAvatar:
     @staticmethod
     def check_avatar_send(user_id):
         avatar_information = SendAvatar.objects(user=ObjectId(user_id)).first()
-        return avatar_information.serialize_sendlist()
+        if avatar_information is not None:
+            print(avatar_information.serialize_sendlist())
+            return avatar_information.serialize_sendlist()
+        else:
+            return []
 
-    @staticmethod
-    def accept_user_avatar(kwargs):
+    # todo доделать удаление запроса аватара
+
+    def accept_user_avatar(self, kwargs):
         try:
+            user_id = kwargs["user"]
+            avatar_id = kwargs["avatar"]
             if kwargs['consent']:
                 User.objects(id=ObjectId(kwargs['user'])).update_one(
                     set__avatarLink=(kwargs['avatar']),
                     set__avatarEndAt=datetime.now())
+                SendAvatar.objects(user=ObjectId(user_id)).delete()
+                self.send_socket_avatar(avatar_id, user_id)
                 return True
 
             else:
-             return False
+                return False
 
         except Exception as e:
             print('accept_user_avatar', e)

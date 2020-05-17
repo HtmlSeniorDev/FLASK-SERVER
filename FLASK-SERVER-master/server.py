@@ -23,7 +23,7 @@ from api.Controller.AttachmentsMapping import get_attachments_gift_blueprint, ge
     get_attachments_photos_profile_blueprint
 
 from api.Controller.PortalMapping import WeddingList_blueprint, Run_line_blueprint, Friends_invite_blueprint, \
-    Friends_list_blueprint, Friends_accsess_blueprint, Friends_request_list_blueprint
+    Friends_list_blueprint, Friends_accsess_blueprint, Friends_request_list_blueprint, Friends_delete_blueprint
 
 from api.Controller.AdminMapping import AdminList_blueprint, moderator_list_blueprint, \
     invisible_list_blueprint, \
@@ -48,6 +48,7 @@ from init import socketio
 getdefaultencoding()
 
 app = create_app()
+app.register_blueprint(Friends_delete_blueprint)
 app.register_blueprint(Friends_request_list_blueprint)
 app.register_blueprint(Friends_list_blueprint)
 app.register_blueprint(Friends_accsess_blueprint)
