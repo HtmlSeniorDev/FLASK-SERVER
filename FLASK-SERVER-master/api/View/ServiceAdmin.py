@@ -45,9 +45,7 @@ class ServiceAdmin:
                 User.objects(id=ObjectId(user_id)).update_one(
                     set__type=TYPE_INVISIBLE,
                 )
-
                 return True
-
             return False
         except Exception as e:
             print('add_invisible', e)

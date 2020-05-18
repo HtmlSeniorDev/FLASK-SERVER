@@ -1,0 +1,102 @@
+from api.registration import registration_blueprint
+from api.autharization import autharization_blueprint
+
+from api.Controller.GiftsController import delete_gifts_blueprint, GiftsListBuy_blueprint, GiftRequestClient_blueprint, \
+    gifts_blueprint
+
+from api.Controller.ProfileController import edit_profile_blueprint, profile_blueprint, add_profile_photo_blueprint, \
+    upload_photo_to_profile_blueprint, delete_photo_to_profile_blueprint, set_avatar_photo_to_profile_blueprint, \
+    Get_profile_photos_blueprint, update_password_blueprint, update_nickname_blueprint
+
+from api.other_function import other_function_blueprint
+
+from api.Controller.AvatarController import AvatarRequestClient_blueprint, AvatarSend_blueprint, AvatarAccept_blueprint, \
+    AvatarList_blueprint, Avatar_Checked_blueprint
+from api.Controller.ZagsController import Zags_Request_Decline_blueprint, Zags_Request_blueprint, Zags_Accept_blueprint, \
+    Zags_Delete_blueprint
+
+from api.Controller.PersonalRoomsController import find_personalrooms_blueprint
+
+from api.Controller.AttachmentsController import get_attachments_gift_blueprint, get_attachments_avatar_blueprint, \
+    get_attachments_photos_profile_blueprint
+
+from api.Controller.PortalController import WeddingList_blueprint, Run_line_blueprint, Friends_invite_blueprint, \
+    Friends_list_blueprint, Friends_accsess_blueprint, Friends_request_list_blueprint, Friends_delete_blueprint
+
+from api.Controller.AdminController import AdminList_blueprint, moderator_list_blueprint, \
+    invisible_list_blueprint, \
+    Unban_Actions_blueprint, add_avatar_admin_blueprint, update_avatar_admin_blueprint, \
+    delete_avatar_admin_blueprint, add_gift_admin_blueprint, upload_gift_admin_blueprint, update_gift_admin_blueprint, \
+    delete_gift_admin_blueprint
+
+from api.Controller.RoomsController import GetRooms_blueprint, users_room_blueprint, last_room_blueprint, \
+    delete_personalrooms_blueprint, create_private_blueprint, Update_Category_blueprint, Delete_Category_blueprint, \
+    Create_Room_blueprint, Create_Category_blueprint, users_list_view_blueprint
+
+from api.Controller.NoticeController import ShowNotice_blueprint
+
+from api.Controller.AudioController import add_audio_blueprint
+from main import main
+from init import create_app
+app = create_app()
+app.register_blueprint(Friends_delete_blueprint)
+app.register_blueprint(Friends_request_list_blueprint)
+app.register_blueprint(Friends_list_blueprint)
+app.register_blueprint(Friends_accsess_blueprint)
+app.register_blueprint(Friends_list_blueprint)
+app.register_blueprint(Friends_invite_blueprint)
+app.register_blueprint(Avatar_Checked_blueprint)
+app.register_blueprint(update_nickname_blueprint)
+app.register_blueprint(update_password_blueprint)
+app.register_blueprint(Run_line_blueprint)
+app.register_blueprint(update_gift_admin_blueprint)
+app.register_blueprint(delete_gift_admin_blueprint)
+app.register_blueprint(add_gift_admin_blueprint)
+app.register_blueprint(upload_gift_admin_blueprint)
+app.register_blueprint(update_avatar_admin_blueprint)
+app.register_blueprint(delete_avatar_admin_blueprint)
+app.register_blueprint(add_avatar_admin_blueprint)
+app.register_blueprint(delete_photo_to_profile_blueprint)
+app.register_blueprint(set_avatar_photo_to_profile_blueprint)
+app.register_blueprint(upload_photo_to_profile_blueprint)
+app.register_blueprint(add_profile_photo_blueprint)
+app.register_blueprint(main)
+app.register_blueprint(add_audio_blueprint)
+app.register_blueprint(Create_Room_blueprint)
+app.register_blueprint(Create_Category_blueprint)
+app.register_blueprint(Delete_Category_blueprint)
+app.register_blueprint(Update_Category_blueprint)
+app.register_blueprint(ShowNotice_blueprint)
+app.register_blueprint(AdminList_blueprint)
+app.register_blueprint(GetRooms_blueprint)
+app.register_blueprint(WeddingList_blueprint)
+app.register_blueprint(AvatarSend_blueprint)
+app.register_blueprint(AvatarAccept_blueprint)
+app.register_blueprint(Zags_Delete_blueprint)
+app.register_blueprint(Zags_Request_Decline_blueprint)
+app.register_blueprint(Zags_Accept_blueprint)
+app.register_blueprint(Zags_Request_blueprint)
+app.register_blueprint(GiftRequestClient_blueprint)
+app.register_blueprint(Unban_Actions_blueprint)
+app.register_blueprint(GiftsListBuy_blueprint)
+app.register_blueprint(AvatarRequestClient_blueprint)
+app.register_blueprint(AvatarList_blueprint)
+app.register_blueprint(Get_profile_photos_blueprint)
+app.register_blueprint(invisible_list_blueprint)
+app.register_blueprint(moderator_list_blueprint)
+app.register_blueprint(last_room_blueprint)
+app.register_blueprint(registration_blueprint)
+app.register_blueprint(autharization_blueprint)
+app.register_blueprint(get_attachments_gift_blueprint)
+app.register_blueprint(delete_gifts_blueprint)
+app.register_blueprint(profile_blueprint)
+app.register_blueprint(get_attachments_avatar_blueprint)
+app.register_blueprint(find_personalrooms_blueprint)
+app.register_blueprint(gifts_blueprint)
+app.register_blueprint(users_room_blueprint)
+app.register_blueprint(edit_profile_blueprint)
+app.register_blueprint(create_private_blueprint)
+app.register_blueprint(users_list_view_blueprint)
+app.register_blueprint(other_function_blueprint)
+app.register_blueprint(delete_personalrooms_blueprint)
+app.register_blueprint(get_attachments_photos_profile_blueprint)

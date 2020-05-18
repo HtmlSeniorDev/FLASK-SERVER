@@ -23,7 +23,7 @@ def create_app():
     limiter.init_app(app)
     mongo.init_app(app)
     mongoEngine.init_app(app)
-    socketio.init_app(app, cors_allowed_origins="*", async_mode='threading', logger=True, ping_timeout=30,
+    socketio.init_app(app, cors_allowed_origins="*", async_mode='threading', logger=True, ping_timeout=300,
                       engineio_logger=True)
     disconnect()
     connect(

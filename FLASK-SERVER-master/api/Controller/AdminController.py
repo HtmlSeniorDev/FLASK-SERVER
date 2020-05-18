@@ -114,7 +114,6 @@ def found_list_moderators(types):
 def found_list_invisible(types):
     try:
         api_admin_list = ServiceAdmin()
-
         return api_admin_list.get_user_type_list(types)
 
     except Exception as e:
