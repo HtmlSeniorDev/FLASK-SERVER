@@ -5,17 +5,14 @@ from bson.json_util import dumps
 class MessagesDao:
     @staticmethod
     def send_message(kwargs):
-
         try:
-
             get_conn().db.messages.insert(kwargs)
-
             return True
 
         except Exception as e:
             print('MessagesDao_send_message', e)
-
             return False
+
 
     @staticmethod
     def read_message(kwargs):

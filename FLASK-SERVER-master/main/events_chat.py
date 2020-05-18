@@ -42,6 +42,7 @@ def write_socket_con(sid, user, room, nic):  # Записываем подклю
 
 def write_last_message(message):  # Записываем последние сообщения во всех комнатах чатах
     write_last_message_pm_mongo(message)
+    ServiceRoomUser.insert_user_in_room(message["user"],message["room"])
 
 
 def get_last_message() -> list:  # Получаем список последних сообщений для конкретной комнаты
@@ -77,6 +78,7 @@ def find_attachments_name(attachments_id) -> str:
 
 
 def write_last_message_pm_mongo(message):  # Записываем приватные сообщения из монги для конкретной комнаты(query=room)
+
     return MESSAGES_DAO.send_message(message)
 
 
