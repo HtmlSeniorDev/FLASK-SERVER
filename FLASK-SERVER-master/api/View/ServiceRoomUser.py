@@ -17,6 +17,9 @@ class ServiceRoomUser:
                 UserInRoom.objects.get(user=User(id=user))
             except Exception as e:
                 UserInRoom(user=User(id=user), room=Room(id=room)).save()
+                user_db = User.objects.get(id=ObjectId(user))
+                user_db.online = True
+                user_db.save()
         except Exception as e:
             print(e, 'ServiceRoomUser.insert_user_in_room')
 
@@ -27,5 +30,8 @@ class ServiceRoomUser:
         try:
             if UserInRoom.objects.get(user=User(id=user)) is not None:
                 UserInRoom.objects(user=ObjectId(user)).delete()
+                user_db = User.objects.get(id=ObjectId(user))
+                user_db.online = False
+                user_db.save()
         except Exception as e:
             print(e, 'delete_user_in_room.insert_user_in_room')

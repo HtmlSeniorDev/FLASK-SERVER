@@ -54,7 +54,7 @@ class ServiceChatPortal:
                 self.friends_list = user.friends
                 self.friends_list.append(ObjectId(data['friend']))  # добавляем его в список друзей
                 user.friends = self.friends_list
-                friend.friends.append(data["user"])
+                friend.friends.append(ObjectId(data["user"]))
                 user.save()
                 friend.save()
                 return True
@@ -81,12 +81,8 @@ class ServiceChatPortal:
         friend = User.objects.get(id=ObjectId(data["friend"]))# ищем список заявок
         """delete_friend"""
         try:
-            user.friends.remove(
-                ObjectId(
-                    data['friend']))
-            friend.friends.remove(
-                ObjectId(
-                    data['user']))
+            user.friends.remove(ObjectId(data['friend']))
+            friend.friends.remove(ObjectId(data['user']))
             user.save()
             friend.save()
 

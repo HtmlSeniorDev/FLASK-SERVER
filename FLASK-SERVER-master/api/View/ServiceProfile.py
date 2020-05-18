@@ -42,6 +42,9 @@ class ServiceProfile:
     @staticmethod
     def get_profile_information(user_id):
         information = User.objects.get(id=ObjectId(user_id))
+        if information.zags is not None:
+            zags = User.objects.get(id=ObjectId(information.zags)).serialize_user_in_room()
+            information.zags = [zags]
         return information.serialize_profile_information()
 
     @staticmethod
