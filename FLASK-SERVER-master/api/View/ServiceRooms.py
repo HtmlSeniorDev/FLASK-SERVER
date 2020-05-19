@@ -26,7 +26,7 @@ class ServiceRooms:
             for _ in json.loads(rooms_list):
                 count += 1
                 room = json.loads(rooms_list)[count]
-                users_in_room = dumps(self.Rooms.get_user_room({'room': str(room['_id']['$oid'])}))
+                users_in_room = dumps(self.Rooms.get_user_room({'room': ObjectId(str(room['_id']['$oid']))}))
                 users = 0
                 for _ in json.loads(users_in_room):
                     users += 1
