@@ -92,8 +92,8 @@ def connect():
 
 
 # todo сделать сообщения прочитанными или нет в зависимости от айди пользователя
-@socketio.on('joined', namespace='/chat')
 @limiter.limit("1/3second")
+@socketio.on('joined', namespace='/chat')
 def joined(msg):
     session['user'] = msg['user']
     session['room'] = msg['room']
