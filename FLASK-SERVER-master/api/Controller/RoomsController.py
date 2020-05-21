@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
 users_list_view_blueprint = Blueprint('users_list_view_blueprint', __name__, )
 Update_Category_blueprint = Blueprint('Update_Category_blueprint', __name__, )
 Delete_Category_blueprint = Blueprint('Delete_Category_blueprint', __name__)
+Delete_room_blueprint = Blueprint("Delete_room_blueprint", __name__)
 Create_Category_blueprint = Blueprint('Create_Category_blueprint', __name__)
 Create_Room_blueprint = Blueprint('Create_Room_blueprint', __name__)
 GetRooms_blueprint = Blueprint('GetRooms_blueprint', __name__, )
@@ -15,7 +16,6 @@ create_private_blueprint = Blueprint('create_private_blueprint', __name__, )
 delete_personalrooms_blueprint = Blueprint('delete_personalrooms_blueprint', __name__, )
 users_room_blueprint = Blueprint('users_room_blueprint', __name__, )
 last_room_blueprint = Blueprint('last_room_blueprint', __name__, )
-
 useri = []
 
 
@@ -121,6 +121,19 @@ def delete_category():
         admin_id = (res['admin_id'])
         category_id = (res['category_id'])
         result = api_delete_categories.delete_category(category_id, admin_id)
+        return jsonify({"Accept": result})
+    except Exception as e:
+        return str(e)
+
+
+@Delete_Category_blueprint.route("/room/delete/", methods=['POST'], strict_slashes=False)  # user nick search
+def delete_room():
+    try:
+        api_delete_categories = ServiceRooms()
+        res = request.get_json()
+        admin_id = (res['admin_id'])
+        category_id = (res['room_id'])
+        result = api_delete_categories.delete_room(category_id, admin_id)
         return jsonify({"Accept": result})
     except Exception as e:
         return str(e)

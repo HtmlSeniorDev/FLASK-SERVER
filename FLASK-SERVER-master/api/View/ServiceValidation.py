@@ -9,23 +9,21 @@ class ServiceValidation:
     status = None
     User = UsersDao()
 
-    def checked_admin(self, creator):
+    def check_admin(self, creator):
         serialize_user = json.loads(dumps(self.User.get_information_user(creator)))
         type_user = int(serialize_user['type'])
         if type_user != TYPE_ADMIN:
             return False
-
         return True
 
-    def checked_moderator(self, creator):
+    def check_moderator(self, creator):
         serialize_user = json.loads(dumps(self.User.get_information_user(creator)))
         type_user = int(serialize_user['type'])
         if type_user != TYPE_MODERATOR:
             return False
-
         return True
 
-    def checked_balance(self, buyer, product_price):
+    def check_balance(self, buyer, product_price):
         response_user = dumps(self.User.get_information_user(buyer))
         serialize_user = json.loads(response_user)
         balance_user = float(serialize_user['balace'])

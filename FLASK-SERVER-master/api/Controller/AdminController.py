@@ -121,16 +121,16 @@ def found_list_invisible(types):
         return str(e)
 
 
-@invisible_list_blueprint.route("/add/invisible", methods=['POST'], strict_slashes=False)  # users in room
-def add_invisible():
+@invisible_list_blueprint.route("/add/user/type", methods=['POST'], strict_slashes=False)  # users in room
+def add_type():
     try:
-
         api_admin_list = ServiceAdmin()
         res = request.get_json()
         id_user = str(res['id_user'])
         id_admin = str(res['id_admin'])
-
-        return jsonify({'status': api_admin_list.add_invisible(id_user, id_admin)})
+        type_ = str(res["type_"])
+        time = str(res["time"])
+        return jsonify({'status': api_admin_list.add_type(id_user, id_admin, type_,time)})
 
     except Exception as e:
 

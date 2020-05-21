@@ -43,7 +43,7 @@ class ServiceAvatar:
         try:
             """Проверка баланса """
 
-            validation = self.Validator.checked_balance(user_id, avatar_price)
+            validation = self.Validator.check_balance(user_id, avatar_price)
             if not validation:
                 """Если у отправителя не хватает баланса """
                 return False
@@ -66,7 +66,7 @@ class ServiceAvatar:
 
     def add_avatar(self, avatar_price, creator, name, photo):
         try:
-            validation = self.Validator.checked_admin(creator)
+            validation = self.Validator.check_admin(creator)
             if not validation:
                 return False
             else:
@@ -85,7 +85,7 @@ class ServiceAvatar:
 
     def update_avatar(self, avatar_price, name, creator, avatar_id):
         try:
-            validation = self.Validator.checked_admin(creator)
+            validation = self.Validator.check_admin(creator)
             if not validation:
                 return False
             else:
@@ -102,7 +102,7 @@ class ServiceAvatar:
 
     def delete_avatar(self, creator, avatar_id):
         try:
-            validation = self.Validator.checked_admin(creator)
+            validation = self.Validator.check_admin(creator)
             if not validation:
                 return False
             else:

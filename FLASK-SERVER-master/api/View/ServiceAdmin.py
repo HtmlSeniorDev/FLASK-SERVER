@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 import json
@@ -6,10 +8,11 @@ from api.Repository.UsersDao import UsersDao
 from .ServiceColor import ServiceColor
 from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
 from .ServiceSendMsg import ServiceSendMsg
-from api.utils.Server_id import TYPE_INVISIBLE
+from api.utils.Server_id import TYPE_INVISIBLE, TYPE_BANNED
 from .ServiceValidation import ServiceValidation
 from api.Models.DataModel.GetUserTypeModel import GetUserTypeModel
 from api.Models.DbModel.UserModel import User
+from ..Models.DbModel.BannedUser import BannedUser
 
 
 class ServiceAdmin:
@@ -31,20 +34,26 @@ class ServiceAdmin:
             pass
 
     # todo эта хуйня ломается из-за поля type,доделать отправку в лс сообщения о том,что он невидимка.
-    def add_invisible(self, user_id, admin_id):
+    def add_type(self, user_id, admin_id, type_, time_ban):
         try:
+
             """ Checked admin_id permission (must TYPE_ADMIN,TYPE_MODERATOR)"""
-            validation_admin = self.Validator.checked_admin(admin_id)
-            validation_moderator = self.Validator.checked_moderator(admin_id)
+            validation_admin = self.Validator.check_admin(admin_id)
+            validation_moderator = self.Validator.check_moderator(admin_id)
             if not validation_admin and not validation_moderator:
                 return False
             """ Checked user_id permission (must TYPE_USER)"""
-            validation_user_admin = self.Validator.checked_moderator(user_id)
-            validation_user_moderator = self.Validator.checked_admin(user_id)
+            validation_user_admin = self.Validator.check_moderator(user_id)
+            validation_user_moderator = self.Validator.check_admin(user_id)
             if not validation_user_admin and not validation_user_moderator:
                 User.objects(id=ObjectId(user_id)).update_one(
-                    set__type=TYPE_INVISIBLE,
+                    set__type__=type_,
                 )
+            if type_ == TYPE_BANNED:
+                created = datetime.now()
+                end = timedelta(minutes=time_ban)
+                BannedUser(bannerId=admin_id, userId=user_id, createdAt=created, endAt=end).save()
+
                 return True
             return False
         except Exception as e:

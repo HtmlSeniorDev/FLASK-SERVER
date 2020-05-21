@@ -79,6 +79,19 @@ class ServiceRooms:
             print(e, 'ServiceRooms.delete_category')
             pass
 
+    def delete_room(self, room_id, admin_id):
+        try:
+            admin_checked = dumps(self.User.get_information_user(admin_id))
+            serialize_admin = json.loads(admin_checked)
+            if serialize_admin['type'] == TYPE_ADMIN:
+                self.Rooms.update_room({'deleted': True}, room_id)
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(e, 'ServiceRooms.delete_room')
+            pass
+
     def create_category(self, name, admin_id, mask, parent):
         try:
             mask = sum(mask)

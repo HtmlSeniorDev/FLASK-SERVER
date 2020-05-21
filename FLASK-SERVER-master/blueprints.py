@@ -22,16 +22,14 @@ from api.Controller.AttachmentsController import get_attachments_gift_blueprint,
 
 from api.Controller.PortalController import WeddingList_blueprint, Run_line_blueprint, Friends_invite_blueprint, \
     Friends_list_blueprint, Friends_accsess_blueprint, Friends_request_list_blueprint, Friends_delete_blueprint
-
 from api.Controller.AdminController import AdminList_blueprint, moderator_list_blueprint, \
     invisible_list_blueprint, \
     Unban_Actions_blueprint, add_avatar_admin_blueprint, update_avatar_admin_blueprint, \
     delete_avatar_admin_blueprint, add_gift_admin_blueprint, upload_gift_admin_blueprint, update_gift_admin_blueprint, \
     delete_gift_admin_blueprint
-
 from api.Controller.RoomsController import GetRooms_blueprint, users_room_blueprint, last_room_blueprint, \
     delete_personalrooms_blueprint, create_private_blueprint, Update_Category_blueprint, Delete_Category_blueprint, \
-    Create_Room_blueprint, Create_Category_blueprint, users_list_view_blueprint
+    Create_Room_blueprint, Create_Category_blueprint, users_list_view_blueprint, Delete_room_blueprint
 
 from api.Controller.NoticeController import ShowNotice_blueprint
 
@@ -39,6 +37,8 @@ from api.Controller.AudioController import add_audio_blueprint
 from main import main
 from init import create_app
 app = create_app()
+
+app.register_blueprint(Delete_room_blueprint)
 app.register_blueprint(Friends_delete_blueprint)
 app.register_blueprint(Friends_request_list_blueprint)
 app.register_blueprint(Friends_list_blueprint)

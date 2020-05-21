@@ -41,7 +41,7 @@ class ServiceGifts:
                 raise Exception('Enough send self')
 
             """Проверка баланса """
-            validation = self.Validator.checked_balance(user_id, gift_price)
+            validation = self.Validator.check_balance(user_id, gift_price)
             if not validation:
 
                 """Если у отправителя не хватает баланса """
@@ -69,7 +69,7 @@ class ServiceGifts:
     def add_gift(self, gift_price, creator, name, description, photo):
         try:
             """Проверяем права доступа"""
-            validation = self.Validator.checked_admin(creator)
+            validation = self.Validator.check_admin(creator)
             if not validation:
                 return False
             else:
@@ -93,7 +93,7 @@ class ServiceGifts:
     def update_gift(self, gift_price, name, creator, gift_id, description):
         try:
             """Проверяем права доступа"""
-            validation = self.Validator.checked_admin(creator)
+            validation = self.Validator.check_admin(creator)
             if not validation:
                 return False
             else:
@@ -111,7 +111,7 @@ class ServiceGifts:
     def delete_gift(self, creator, gift_id):
         try:
             """Проверяем права доступа"""
-            validation = self.Validator.checked_admin(creator)
+            validation = self.Validator.check_admin(creator)
             if not validation:
                 return False
             else:

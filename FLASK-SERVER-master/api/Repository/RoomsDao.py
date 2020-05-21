@@ -46,6 +46,18 @@ class RoomsDao:
             return False
 
     @staticmethod
+    def update_room(kwargs, category_id):
+        try:
+            get_conn().db.chatrooms.find_one_and_update({'_id': ObjectId(category_id)},
+                                                        {"$set": kwargs})
+
+            return True
+
+        except Exception as e:
+            print(e, 'RoomsDao.update_category')
+            return False
+
+    @staticmethod
     def create_category(kwargs):
         try:
             get_conn().db.categories.insert(kwargs)
@@ -68,5 +80,3 @@ class RoomsDao:
             print(e, 'RoomsDao.create_room')
 
             return False
-
-
