@@ -128,8 +128,8 @@ def add_type():
         res = request.get_json()
         id_user = str(res['id_user'])
         id_admin = str(res['id_admin'])
-        type_ = str(res["type_"])
-        time = str(res["time"])
+        type_ = (res["type_"])
+        time = (res["time"])
         return jsonify({'status': api_admin_list.add_type(id_user, id_admin, type_,time)})
 
     except Exception as e:

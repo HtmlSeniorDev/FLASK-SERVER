@@ -8,7 +8,7 @@ from api.Repository.UsersDao import UsersDao
 from .ServiceColor import ServiceColor
 from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
 from .ServiceSendMsg import ServiceSendMsg
-from api.utils.Server_id import TYPE_INVISIBLE, TYPE_BANNED
+from api.utils.Server_id import TYPE_INVISIBLE, TYPE_BANNED, TYPE_USER
 from .ServiceValidation import ServiceValidation
 from api.Models.DataModel.GetUserTypeModel import GetUserTypeModel
 from api.Models.DbModel.UserModel import User
@@ -33,7 +33,7 @@ class ServiceAdmin:
             print(e, 'AdminService.get_user_type_list')
             pass
 
-    # todo эта хуйня ломается из-за поля type,доделать отправку в лс сообщения о том,что он невидимка.
+    """Снять бан/Добавить бан"""
     def add_type(self, user_id, admin_id, type_, time_ban):
         try:
 
@@ -49,10 +49,16 @@ class ServiceAdmin:
                 User.objects(id=ObjectId(user_id)).update_one(
                     set__type__=type_,
                 )
-            if type_ == TYPE_BANNED:
-                created = datetime.now()
-                end = timedelta(minutes=time_ban)
-                BannedUser(bannerId=admin_id, userId=user_id, createdAt=created, endAt=end).save()
+                if type_ == TYPE_BANNED:
+                    created = datetime.now()
+                    end = created + timedelta(minutes=time_ban)
+                    BannedUser(bannerId=admin_id, userId=user_id, createdAt=created, endAt=end).save()
+                elif type_ == TYPE_USER:
+                    try:
+                        BannedUser.objects(userId=ObjectId(user_id)).delete()
+                    except Exception as e:
+                        print(e)
+                        return True
 
                 return True
             return False

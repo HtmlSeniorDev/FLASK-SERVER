@@ -28,10 +28,8 @@ class ServiceCheckBanned:
                     user_type = user['type']
                     if user_type == TYPE_BANNED:
                         self.User.change_information_user(id_user, {'type': TYPE_BANNED})
-
                         return False
-
                 return True
-
+            
         except Exception as e:
             print('ServiceCheckBanned', e)
