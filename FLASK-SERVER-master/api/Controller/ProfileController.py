@@ -1,10 +1,10 @@
 import json
 from bson.objectid import ObjectId
 from bson.json_util import dumps
-from db import mongo
 from flask import request, Blueprint, jsonify
 from ..Repository.UsersDao import UsersDao
 from api.View.ServiceProfile import ServiceProfile
+from ..Repository.base_repo import get_conn
 
 update_password_blueprint = Blueprint('update_password_blueprint', __name__)
 edit_profile_blueprint = Blueprint('edit_profile_blueprint', __name__, )
@@ -34,7 +34,7 @@ def get_profile_photos(id_user):
         array_dict_user = []
         dict_user = {}
 
-        online_users = mongo.db.photos
+        online_users = get_conn().db.photos
         photos_object = dumps(online_users.find({'user': ObjectId(str(id_user))}))
 
         for photo in json.loads(photos_object):

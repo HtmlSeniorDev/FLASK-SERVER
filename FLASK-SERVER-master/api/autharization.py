@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
+from api.Repository.base_repo import get_conn
 from api.View.ServicePushNotification import ServicePushNotification
 from api.View.ServiceCheckBanned import ServiceCheckBanned
-from db import mongo
 
 autharization_blueprint = Blueprint('autharization_blueprint', __name__, )
 
@@ -18,7 +18,7 @@ def autharization(login, password, imei, FcmToken):
             return jsonify({'auth': False})
         else:
             try:
-                online_users = mongo.db.users
+                online_users = get_conn().db.users
                 log = (online_users.find_one({'login': login}))
                 Push.add_push_token(str(FcmToken), log['_id'])
                 if (log['login'] == login) and (log['password'] == password):

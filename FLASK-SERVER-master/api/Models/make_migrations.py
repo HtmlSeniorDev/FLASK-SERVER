@@ -1,12 +1,12 @@
-from db import mongo
+from api.Repository.base_repo import get_conn
 
 
 def down():
-    mongo.db.users.update_many({}, {'$unset': {'some_field': ''}})
+    get_conn().db.users.update_many({}, {'$unset': {'some_field': ''}})
 
 
 def up():
-    mongo.db.users.update_many({}, {'$set': {'friends': []}})
+    get_conn().db.users.update_many({}, {'$set': {'friends': []}})
 
 if __name__ == '__main__':
     up()

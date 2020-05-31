@@ -6,6 +6,7 @@ from api.utils.Server_id import TYPE_USER
 
 """Шедулер для тюрьмы"""
 
+
 class BannedScheduler:
     time = datetime.now()
 

@@ -1,8 +1,9 @@
 import json
 from flask import Blueprint, request, jsonify
+
+from api.Repository.base_repo import get_conn
 from api.View.ServiceRooms import ServiceRooms
 from bson.json_util import dumps
-from db import mongo
 from bson.objectid import ObjectId
 
 users_list_view_blueprint = Blueprint('users_list_view_blueprint', __name__, )
@@ -25,7 +26,7 @@ def last_room():
         res = request.get_json()
         last_room_user = (res['user'])
         print(last_room_user)
-        online_users = mongo.db.lastRooms
+        online_users = get_conn().db.lastRooms
 
         find_room = (online_users.find_one({'user': (str(last_room_user))}))
         last_room = (find_room['room'])
@@ -33,7 +34,7 @@ def last_room():
             query = {'last_room': 'Новички чата'}  # переделать комнату на айди комнаты
             return dumps(query)
         else:
-            get_name_room = mongo.db.chatrooms
+            get_name_room = get_conn().db.chatrooms
             get_find_name = get_name_room.find_one({'_id': ObjectId(str(last_room))})
             name_room = get_find_name['name']
             query = {'last_room': str(name_room)}
@@ -53,7 +54,7 @@ def found_user_in_room(room_id):
 
 @delete_personalrooms_blueprint.route("/delete/personalrooms/<nic_id>", methods=['GET'])  # user nick search
 def delete_personal_rooms(nic_id):
-    get_personal = mongo.db.personalrooms
+    get_personal =  get_conn().db.personalrooms
     (get_personal.delete_many({'users': str(nic_id), 'hides': []}))
     return jsonify({'deleted': True})
 
@@ -66,11 +67,11 @@ def create_list_rooms(my_id, nic):  # dopisat
 
         nick_name = nic
 
-        check_room = mongo.db.personalrooms
+        check_room = get_conn().db.personalrooms
         room = dumps(check_room.find_one({'users': [my_id, nick_name], "hides": []}))
         room_reverse = dumps(check_room.find_one({'users': [nick_name, my_id], "hides": []}))
         if room == 'null' and room_reverse == 'null':
-            mongo.db.personalrooms.insert({
+            get_conn().db.personalrooms.insert({
                 "hides": [],
                 "users": [my_id, nick_name],
                 "_class": "ru.readme.server.object.db.DBPersonalRoom"
@@ -174,7 +175,7 @@ def create_room():
 @users_list_view_blueprint.route("/all/users/", methods=['GET'])  # user nick search
 def found_all_user():
     try:
-        online_users = mongo.db.userInRoom
+        online_users = get_conn().db.userInRoom
         count = 0
         all_count = online_users.find({})
         for _ in all_count:

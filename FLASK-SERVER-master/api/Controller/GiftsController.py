@@ -1,8 +1,8 @@
 from bson.objectid import ObjectId
 
 from api.Models.DbModel.UserModel import User
+from api.Repository.base_repo import get_conn
 from limiter import limiter
-from db import mongo
 from flask import Blueprint, request, jsonify
 from api.View.ServiceGifts import ServiceGifts
 from api.utils.Server_id import SERVER_ADDRESS
@@ -47,7 +47,7 @@ def get_gifts():
 @limiter.limit("20/1minutes")
 def delete_gifts(id_gift):
     try:
-        coll_gift = mongo.db.usergifts
+        coll_gift = get_conn().db.usergifts
         (coll_gift.delete_one({'_id': ObjectId(str(id_gift))}))
         return True
     except Exception as e:
@@ -63,7 +63,7 @@ def found_user_gift(nic):
     data = {'data': []}
     data_dict = {}
     print('nic----', str(nic))
-    gift_profile = mongo.db.usergifts
+    gift_profile = get_conn().db.usergifts
     get_gift = dumps(gift_profile.find({'user': (ObjectId(str(nic)))}))
     count = 0
     arr_gifts_dict = {'url': []}
@@ -78,7 +78,7 @@ def found_user_gift(nic):
         complete_msg = json.loads(get_gift)[count_list]
         gifts = complete_msg['gift']["$oid"]
         gifts_id = complete_msg['_id']['$oid']
-        search_description = mongo.db.gifts.find_one({'_id': ObjectId(str(gifts))})
+        search_description = get_conn().db.gifts.find_one({'_id': ObjectId(str(gifts))})
         get_description = search_description['description']
         get_name = search_description['name']
         arr_gifts_dict['description'] = str(get_description)

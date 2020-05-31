@@ -1,5 +1,4 @@
 import json
-from db import mongo
 from bson.json_util import dumps, loads
 from bson.objectid import ObjectId
 from flask import Blueprint, request, jsonify
@@ -25,55 +24,55 @@ found_user_banned_blueprint = Blueprint('found_user_banned_blueprint', __name__)
 useri = []
 
 
-@found_user_banned_blueprint.route("/banned/user", methods=['GET'])  # users in room
-def found_user_banned():
-    online_users = mongo.db.dBBannedUser
-    user_room = dumps(online_users.find().limit(50).sort('_id', -1), sort_keys=False, indent=4,
-                      ensure_ascii=False, separators=(',', ': '))
-    count1 = 0
-    global us
-    for us in json.loads(user_room):
-        count1 += 1
-        us = us['userId']
-        useri.append(us)
-    global v
-    global user
-    arr = []
-    user = {'data': []}
-    count = 0
-    for _ in range(count1):
-        count += 1
-        v = loads(user_room)
-        b = v[count - 1]
-        g = (b['userId'])
-        admin = (b['bannerId'])
-        id_document = (b['_id'])
-        online_users = mongo.db.users
-        nick = (online_users.find_one({'_id': ObjectId(str(g))}))
-        online_users1 = mongo.db.users
-        nick1 = (online_users1.find_one({'_id': ObjectId(str(admin))}))
-        rus1 = (nick1['nic'])
-        rus = (nick['nic'])
-        color = int(nick['color'])
-
-        if rus == None:
-            pass
-            print('users empty')
-        else:
-            lists_users = (
-                {'user': rus + '', 'color': color, 'user_id': g + '', 'admin': rus1 + '',
-                 "id_document": str(id_document), "id_banner": str(admin)})
-            arr.append(lists_users)
-    url_by_dict = {i['user']: i for i in arr}
-    new_items = list(url_by_dict.values())
-    counts = 0
-    for i in new_items[::-1]:
-        counts += 1
-        user['data'].append(i)
-
-    complete = dumps((user), sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
-
-    return complete
+# @found_user_banned_blueprint.route("/banned/user", methods=['GET'])  # users in room
+# def found_user_banned():
+#     online_users = mongo.db.dBBannedUser
+#     user_room = dumps(online_users.find().limit(50).sort('_id', -1), sort_keys=False, indent=4,
+#                       ensure_ascii=False, separators=(',', ': '))
+#     count1 = 0
+#     global us
+#     for us in json.loads(user_room):
+#         count1 += 1
+#         us = us['userId']
+#         useri.append(us)
+#     global v
+#     global user
+#     arr = []
+#     user = {'data': []}
+#     count = 0
+#     for _ in range(count1):
+#         count += 1
+#         v = loads(user_room)
+#         b = v[count - 1]
+#         g = (b['userId'])
+#         admin = (b['bannerId'])
+#         id_document = (b['_id'])
+#         online_users = mongo.db.users
+#         nick = (online_users.find_one({'_id': ObjectId(str(g))}))
+#         online_users1 = mongo.db.users
+#         nick1 = (online_users1.find_one({'_id': ObjectId(str(admin))}))
+#         rus1 = (nick1['nic'])
+#         rus = (nick['nic'])
+#         color = int(nick['color'])
+#
+#         if rus == None:
+#             pass
+#             print('users empty')
+#         else:
+#             lists_users = (
+#                 {'user': rus + '', 'color': color, 'user_id': g + '', 'admin': rus1 + '',
+#                  "id_document": str(id_document), "id_banner": str(admin)})
+#             arr.append(lists_users)
+#     url_by_dict = {i['user']: i for i in arr}
+#     new_items = list(url_by_dict.values())
+#     counts = 0
+#     for i in new_items[::-1]:
+#         counts += 1
+#         user['data'].append(i)
+#
+#     complete = dumps((user), sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': '))
+#
+#     return complete
 
 
 @Unban_Actions_blueprint.route("/Unban/User", methods=['POST'], strict_slashes=False)  # user search objectid
