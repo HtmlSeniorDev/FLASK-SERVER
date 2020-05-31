@@ -7,7 +7,6 @@ from api.Repository.AvatarDao import AvatarDao
 from api.Repository.UsersDao import UsersDao
 from .ServiceColor import ServiceColor
 from .ServiceFindPersonalRoom import ServiceFindPersonalRooms
-from .ServiceSendMsg import ServiceSendMsg
 from api.utils.Server_id import TYPE_INVISIBLE, TYPE_BANNED, TYPE_USER
 from .ServiceValidation import ServiceValidation
 from api.Models.DataModel.GetUserTypeModel import GetUserTypeModel
@@ -20,7 +19,6 @@ class ServiceAdmin:
     User = UsersDao()
     Validator = ServiceValidation()
     Color = ServiceColor()
-    Send = ServiceSendMsg()
     Text_Invisible = 'Теперь вы не можете писать в общий чат!'
     Private_room = ServiceFindPersonalRooms()
 

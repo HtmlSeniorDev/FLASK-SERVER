@@ -33,7 +33,6 @@ from api.Controller.RoomsController import GetRooms_blueprint, users_room_bluepr
 
 from api.Controller.NoticeController import ShowNotice_blueprint
 
-from api.Controller.AudioController import add_audio_blueprint
 from main import main
 from init import create_app
 app = create_app()
@@ -61,7 +60,6 @@ app.register_blueprint(set_avatar_photo_to_profile_blueprint)
 app.register_blueprint(upload_photo_to_profile_blueprint)
 app.register_blueprint(add_profile_photo_blueprint)
 app.register_blueprint(main)
-app.register_blueprint(add_audio_blueprint)
 app.register_blueprint(Create_Room_blueprint)
 app.register_blueprint(Create_Category_blueprint)
 app.register_blueprint(Delete_Category_blueprint)

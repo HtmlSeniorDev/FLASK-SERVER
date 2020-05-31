@@ -3,12 +3,12 @@ from SERVER_CONFIG import MONGO_ADDRESS, MONGO_PORT, MONGO_USER, MONGO_PASS
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from mongoengine import connect, disconnect
-from db import mongoEngine
+from db import mongoEngine, mongo
 from limiter import limiter
-from api.Repository.base_repo import get_conn
 
 socketio = SocketIO()
 app = Flask(__name__)
+mongo_connect = mongo
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
@@ -22,7 +22,7 @@ def create_app():
     app.config["MONGODB_SETTINGS"] = {"DB": "chat"}
 
     limiter.init_app(app)
-    get_conn().init_app(app)
+    mongo_connect.init_app(app)
     mongoEngine.init_app(app)
     socketio.init_app(app, cors_allowed_origins="*", async_mode='threading', logger=True, ping_timeout=300,
                       engineio_logger=True)
